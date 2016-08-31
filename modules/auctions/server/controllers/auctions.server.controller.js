@@ -5,113 +5,113 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
+  Auction = mongoose.model('Auction'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Create an article
+ * Create an auction
  */
 exports.create = function (req, res) {
-  var article = new Article(req.body);
-  article.user = req.user;
+  var auction = new Auction(req.body);
+  auction.user = req.user;
 
-  article.save(function (err) {
+  auction.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(auction);
     }
   });
 };
 
 /**
- * Show the current article
+ * Show the current auction
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var article = req.article ? req.article.toJSON() : {};
+  var auction = req.auction ? req.auction.toJSON() : {};
 
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  article.isCurrentUserOwner = req.user && article.user && article.user._id.toString() === req.user._id.toString() ? true : false;
+  // Add a custom field to the Auction, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Auction model.
+  auction.isCurrentUserOwner = req.user && auction.user && auction.user._id.toString() === req.user._id.toString() ? true : false;
 
-  res.json(article);
+  res.json(auction);
 };
 
 /**
- * Update an article
+ * Update an auction
  */
 exports.update = function (req, res) {
-  var article = req.article;
+  var auction = req.auction;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  auction.title = req.body.title;
+  auction.content = req.body.content;
 
-  article.save(function (err) {
+  auction.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(auction);
     }
   });
 };
 
 /**
- * Delete an article
+ * Delete an auction
  */
 exports.delete = function (req, res) {
-  var article = req.article;
+  var auction = req.auction;
 
-  article.remove(function (err) {
+  auction.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(auction);
     }
   });
 };
 
 /**
- * List of Articles
+ * List of Auctions
  */
 exports.list = function (req, res) {
-  Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+  Auction.find().sort('-created').populate('user', 'displayName').exec(function (err, auctions) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(articles);
+      res.json(auctions);
     }
   });
 };
 
 /**
- * Article middleware
+ * Auction middleware
  */
-exports.articleByID = function (req, res, next, id) {
+exports.auctionByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Article is invalid'
+      message: 'Auction is invalid'
     });
   }
 
-  Article.findById(id).populate('user', 'displayName').exec(function (err, article) {
+  Auction.findById(id).populate('user', 'displayName').exec(function (err, auction) {
     if (err) {
       return next(err);
-    } else if (!article) {
+    } else if (!auction) {
       return res.status(404).send({
-        message: 'No article with that identifier has been found'
+        message: 'No auction with that identifier has been found'
       });
     }
-    req.article = article;
+    req.auction = auction;
     next();
   });
 };
