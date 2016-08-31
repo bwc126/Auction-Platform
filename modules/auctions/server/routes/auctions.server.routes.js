@@ -7,7 +7,7 @@ var auctionsPolicy = require('../policies/auctions.server.policy'),
   auctions = require('../controllers/auctions.server.controller');
 
 module.exports = function (app) {
-  // Articles collection routes
+  // Auctions collection routes
   app.route('/api/auctions').all(auctionsPolicy.isAllowed)
     .get(auctions.list)
     .post(auctions.create);
