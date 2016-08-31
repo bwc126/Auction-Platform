@@ -3,21 +3,21 @@
 /**
  * Module dependencies
  */
-var articlesPolicy = require('../policies/articles.server.policy'),
-  articles = require('../controllers/articles.server.controller');
+var auctionsPolicy = require('../policies/auctions.server.policy'),
+  auctions = require('../controllers/auctions.server.controller');
 
 module.exports = function (app) {
   // Articles collection routes
-  app.route('/api/articles').all(articlesPolicy.isAllowed)
-    .get(articles.list)
-    .post(articles.create);
+  app.route('/api/auctions').all(auctionsPolicy.isAllowed)
+    .get(auctions.list)
+    .post(auctions.create);
 
-  // Single article routes
-  app.route('/api/articles/:articleId').all(articlesPolicy.isAllowed)
-    .get(articles.read)
-    .put(articles.update)
-    .delete(articles.delete);
+  // Single auction routes
+  app.route('/api/auctions/:auctionId').all(auctionsPolicy.isAllowed)
+    .get(auctions.read)
+    .put(auctions.update)
+    .delete(auctions.delete);
 
-  // Finish by binding the article middleware
-  app.param('articleId', articles.articleByID);
+  // Finish by binding the auction middleware
+  app.param('auctionId', auctions.auctionByID);
 };

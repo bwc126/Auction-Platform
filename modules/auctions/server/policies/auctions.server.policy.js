@@ -15,28 +15,28 @@ exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/auctions',
       permissions: '*'
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/auctions/:auctionId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/auctions',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/auctions/:auctionId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/articles',
+      resources: '/api/auctions',
       permissions: ['get']
     }, {
-      resources: '/api/articles/:articleId',
+      resources: '/api/auctions/:auctionId',
       permissions: ['get']
     }]
   }]);
@@ -48,8 +48,8 @@ exports.invokeRolesPolicies = function () {
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an article is being processed and the current user created it then allow any manipulation
-  if (req.article && req.user && req.article.user && req.article.user.id === req.user.id) {
+  // If an auction is being processed and the current user created it then allow any manipulation
+  if (req.auction && req.user && req.auction.user && req.auction.user.id === req.user.id) {
     return next();
   }
 
