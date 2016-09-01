@@ -16,6 +16,13 @@
           <label class="control-label" for="content">Content</label>
           <textarea name="content" data-ng-model="vm.auction.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
+        <div class="form-group" hidden="true">
+          <label class="control-label" for="photo">Photo</label>
+          <textarea name="photo" data-ng-model="vm.auction.photo" id="photo" class="form-control" rows="1" placeholder="Auction Photo"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Upload Photo' : 'Upload'}}</button>
+        </div>
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Update' : 'Create'}}</button>
         </div>
