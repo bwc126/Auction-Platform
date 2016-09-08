@@ -29,10 +29,10 @@ var AuctionSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  thumb: {
+  auctionImageURL: {
     type: String,
-    default: ''
-  }
+    default: 'modules/auctions/client/img/default.png'
+  },
 });
 
 mongoose.model('Auction', AuctionSchema);
