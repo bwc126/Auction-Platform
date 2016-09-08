@@ -13,6 +13,7 @@
       </small>
       <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
       <p class="list-group-item-text" ng-bind="auction.content"></p>
+      <p class="list-group barf" ng-thumb="{ file: auction.thumb, height: 100 }"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">

@@ -2,12 +2,14 @@
   'use strict';
 
   angular
-    .module('auctions')
+    .module('auctions', [
+      'angularFileUpload'
+    ])
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['$scope', '$state', 'auctionResolve', 'Authentication'];
+  AuctionsController.$inject = ['$scope', '$state', 'auctionResolve', 'Authentication', 'FileUploader'];
 
-  function AuctionsController($scope, $state, auction, Authentication) {
+  function AuctionsController($scope, $state, auction, Authentication, FileUploader) {
     var vm = this;
 
     vm.auction = auction;
@@ -16,7 +18,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
-
+    $scope.uploader = new FileUploader();
     // Remove existing Auction
     function remove() {
       if (confirm('Are you sure you want to delete?')) {

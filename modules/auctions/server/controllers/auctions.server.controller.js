@@ -14,7 +14,6 @@ var path = require('path'),
 exports.create = function (req, res) {
   var auction = new Auction(req.body);
   auction.user = req.user;
-
   auction.save(function (err) {
     if (err) {
       return res.status(400).send({

@@ -28,6 +28,10 @@ var AuctionSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  thumb: {
+    type: String,
+    default: ''
   }
 });
 

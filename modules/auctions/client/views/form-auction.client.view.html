@@ -16,13 +16,12 @@
           <label class="control-label" for="content">Content</label>
           <textarea name="content" data-ng-model="vm.auction.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
-        <div class="form-group" hidden="true">
-          <label class="control-label" for="photo">Photo</label>
-          <textarea name="photo" data-ng-model="vm.auction.photo" id="photo" class="form-control" rows="1" placeholder="Auction Photo"></textarea>
-        </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Upload Photo' : 'Upload'}}</button>
+          <label class="control-label" for="thumb">Thumb</label>
+          <!-- <div class="well drop-zone form-control" nv-file-over="" uploader="uploader" data-ng-model="vm.auction.thumb" id="thumbdrop">Thumbnail dropzone</div> -->
+          <input nv-file-select="" uploader="uploader" multiple="" type="file" data-ng-model="vm.auction.thumb" id="thumbbrowse" class="form-control"></input>
         </div>
+    
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Update' : 'Create'}}</button>
         </div>
