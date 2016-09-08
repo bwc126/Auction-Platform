@@ -4,6 +4,7 @@
   </div>
   <div class="list-group">
     <a ng-repeat="auction in vm.auctions" ui-sref="auctions.view({ auctionId: auction._id })" class="list-group-item">
+      <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="auction.created | date:'mediumDate'"></span>
@@ -13,7 +14,6 @@
       </small>
       <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
       <p class="list-group-item-text" ng-bind="auction.content"></p>
-      <p class="list-group barf" ng-thumb="{ file: auction.thumb, height: 100 }"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
