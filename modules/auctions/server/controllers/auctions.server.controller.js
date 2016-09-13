@@ -6,6 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Auction = mongoose.model('Auction'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -58,7 +60,28 @@ exports.update = function (req, res) {
     }
   });
 };
+/**
+ * TODO: Change @changeProfilePicture to work for auction images, insert necessary function calls into create and update above.
+ */
+exports.changeAuctionPicture = function (req, res) {
+  var auction = req.auction;
+  var upload = multer(config.uploads.auctionUpload).single('newAuctionPicture');
+  var auctionUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
 
+  // Filtering to upload only images
+  upload.fileFilter = auctionUploadFileFilter;
+
+
+  upload(req, res, function (uploadError) {
+    if(uploadError) {
+      return res.status(400).send({
+        message: 'Error occurred while uploading auction picture'
+      });
+    } else {
+      auction.auctionImageURL = config.uploads.auctionUpload.dest + req.file.filename;
+    }
+  });
+};
 /**
  * Delete an auction
  */

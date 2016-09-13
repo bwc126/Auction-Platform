@@ -18,6 +18,9 @@ module.exports = function (app) {
     .put(auctions.update)
     .delete(auctions.delete);
 
+  app.route('/api/auction/:auctionId/picture').all(auctionsPolicy.isAllowed)
+    .put(auctions.changeAuctionPicture);
+
   // Finish by binding the auction middleware
   app.param('auctionId', auctions.auctionByID);
 };

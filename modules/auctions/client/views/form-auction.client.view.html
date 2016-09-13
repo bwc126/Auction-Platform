@@ -19,9 +19,20 @@
         <div class="form-group">
           <label class="control-label" for="thumb">Thumb</label>
           <!-- <div class="well drop-zone form-control" nv-file-over="" uploader="uploader" data-ng-model="vm.auction.thumb" id="thumbdrop">Thumbnail dropzone</div> -->
-          <input nv-file-select="" uploader="uploader" multiple="" type="file" data-ng-model="vm.auction.thumb" id="thumbbrowse" class="form-control"></input>
+          <input nv-file-select="" uploader="uploader" multiple="" type="file" data-ng-model="uploader.imageURL" id="thumbbrowse" class="form-control"></input>
+          <img ng-src="{{imageURL}}" alt="auction image" class="img-thumbnail auction-picture">
         </div>
-    
+        <div class="text-center form-group" ng-show="uploader.queue.length">
+          <button class="btn btn-primary" ng-click="uploadAuctionPicture();">Upload</button>
+          <button class="btn btn-default" ng-click="cancelUpload();">Cancel</button>
+        </div>
+        <div ng-show="success" class="text-center text-success">
+          <strong>Profile Picture Changed Successfully</strong>
+        </div>
+        <div ng-show="error" class="text-center text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Update' : 'Create'}}</button>
         </div>
