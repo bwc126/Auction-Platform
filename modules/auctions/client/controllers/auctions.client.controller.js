@@ -17,14 +17,14 @@
     vm.remove = remove;
     vm.save = save;
     // Create an uploader object, to handle uploaded files
-    $scope.uploader = new FileUploader();
+
 
     $scope.user = Authentication.user;
     $scope.auction = auction;
     $scope.imageURL = $scope.auction.auctionImageURL;
     // Create file uploader instance
     $scope.uploader = new FileUploader({
-      url: 'api/auctions/:auctionId/picture',
+      url: '/auctions/img/auctions/',
       alias: 'newAuctionPicture'
     });
 
@@ -79,6 +79,8 @@
 
       // Start upload
       $scope.uploader.uploadAll();
+      console.log(vm.auction);
+
     };
 
     // Cancel the upload process
