@@ -3,6 +3,9 @@
     <h1 ng-bind="vm.auction.title"></h1>
   </div>
   <div class="pull-right" ng-show="vm.auction.isCurrentUserOwner">
+    <a class="btn btn-primary" ui-sref="auctions.picture({ auctionId: vm.auction._id })">
+      <i class="glyphicon glyphicon-camera"></i>
+    </a>
     <a class="btn btn-primary" ui-sref="auctions.edit({ auctionId: vm.auction._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>

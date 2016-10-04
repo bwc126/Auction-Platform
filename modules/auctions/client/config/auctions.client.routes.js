@@ -49,6 +49,19 @@
           pageTitle: 'Edit Auction {{ auctionResolve.title }}'
         }
       })
+      .state('auctions.picture', {
+        url: '/:auctionId/picture',
+        templateUrl: 'modules/auctions/client/views/change-auction-picture.client.view.html',
+        controller: 'ChangeAuctionPictureController',
+        controllerAs: 'vm',
+        resolve: {
+          auctionResolve: getAuction
+        },
+        data: {
+          roles: ['user', 'admin'],
+          pageTitle: 'Edit Auction Picture {{ auctionResolve.title }}',
+        }
+      })
       .state('auctions.view', {
         url: '/:auctionId',
         templateUrl: 'modules/auctions/client/views/view-auction.client.view.html',

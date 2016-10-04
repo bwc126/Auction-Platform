@@ -51,6 +51,8 @@ exports.update = function (req, res) {
   auction.content = req.body.content;
   auction.auctionImageURL = req.body.auctionImageURL;
 
+
+
   auction.save(function (err) {
     if (err) {
       return res.status(400).send({
