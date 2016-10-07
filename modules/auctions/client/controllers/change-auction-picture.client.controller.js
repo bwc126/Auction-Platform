@@ -9,13 +9,14 @@
 
   function ChangeAuctionPictureController($scope, $state, $timeout, $window, auction, Authentication, FileUploader) {
     var vm = this;
+    console.dir($state);
 
     $scope.user = Authentication.user;
     $scope.imageURL = auction.auctionImageURL;
-
+    console.log(auction);
     // Create file uploader instance
     $scope.uploader = new FileUploader({
-      url: 'api/:auctionId/picture',
+      url: 'api/auctions/'+auction._id,
       alias: 'newAuctionPicture'
     });
 
@@ -75,7 +76,7 @@
     // Cancel the upload process
     $scope.cancelUpload = function () {
       $scope.uploader.clearQueue();
-      $scope.imageURL = $scope.auction.auctionImageURL;
+      $scope.imageURL = auction.auctionImageURL;
     };
   }
 })();

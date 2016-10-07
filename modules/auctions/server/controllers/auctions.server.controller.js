@@ -81,7 +81,9 @@ exports.changeAuctionPicture = function (req, res) {
         message: 'Error occurred while uploading auction picture'
       });
     } else {
+      console.log("in change Auction Picture " + auction);
       auction.auctionImageURL = config.uploads.auctionUpload.dest + req.file.filename;
+      console.log("after: " + auction);
     }
   });
 };

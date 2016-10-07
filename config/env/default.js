@@ -38,7 +38,7 @@ module.exports = {
       },
     },
     auctionUpload: {
-      dest: './modules/auctions/client/img/auctions/', // Auctions upload destination path
+      dest: 'modules/auctions/client/img/auctions/', // Auctions upload destination path
       limits: {
         fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
       }
