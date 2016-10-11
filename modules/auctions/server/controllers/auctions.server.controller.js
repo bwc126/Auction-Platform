@@ -74,18 +74,51 @@ exports.changeAuctionPicture = function (req, res) {
   // Filtering to upload only images
   upload.fileFilter = auctionUploadFileFilter;
 
+  //
+  // upload(req, res, function (uploadError) {
+  //   if(uploadError) {
+  //     return res.status(400).send({
+  //       message: 'Error occurred while uploading auction picture'
+  //     });
+  //   } else {
+  //     console.log('in change Auction Picture ' + auction);
+  //     auction.auctionImageURL = config.uploads.auctionUpload.dest + req.file.filename;
+  //     console.log('after: ' + auction);
+  //   }
+  // });
 
-  upload(req, res, function (uploadError) {
-    if(uploadError) {
-      return res.status(400).send({
-        message: 'Error occurred while uploading auction picture'
-      });
-    } else {
-      console.log("in change Auction Picture " + auction);
-      auction.auctionImageURL = config.uploads.auctionUpload.dest + req.file.filename;
-      console.log("after: " + auction);
-    }
-  });
+  if (auction) {
+    upload(req, res, function (uploadError) {
+      if(uploadError) {
+        return res.status(400).send({
+          message: 'Error occurred while uploading auction picture'
+        });
+      } else {
+        auction.auctionImageURL = config.uploads.auctionUpload.dest + req.file.filename;
+
+        auction.save(function (saveError) {
+          if (saveError) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(saveError)
+            });
+          }
+          else {
+            req.login(auction.user, function (err) {
+              if (err) {
+                res.status(400).send(err);
+              } else {
+                res.json(auction);
+              }
+            });
+          }
+        });
+      }
+    });
+  } else {
+    res.status(400).send({
+      message: 'User is not signed in'
+    });
+  }
 };
 /**
  * Delete an auction
