@@ -16,6 +16,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.placeBid = placeBid;
 
     // Remove existing Auction
     function remove() {
@@ -47,6 +48,11 @@
       function errorCallback(res) {
         vm.error = res.data.message;
       }
+    }
+
+    // Place bid 
+    function placeBid() {
+      console.log('bid button pushed');
     }
   }
 })();
