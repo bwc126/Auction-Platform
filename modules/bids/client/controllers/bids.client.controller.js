@@ -9,7 +9,7 @@
 
   function BidsController($scope, $state, $window, $timeout, bid, Authentication) {
     var vm = this;
-
+    console.dir($state);
     vm.bid = bid;
     vm.authentication = Authentication;
     vm.error = null;
@@ -52,7 +52,7 @@
 
     // Place bid
     function placeBid() {
-      console.log('bid button pushed');
+      console.log('bid button pushed - BidsController');
     }
   }
 })();

@@ -49,17 +49,6 @@
           pageTitle: 'Cancel Bid {{ bidResolve.title }}'
         }
       })
-      .state('bids.place', {
-        templateUrl: 'modules/bids/client/views/place-bid.client.view.html',
-        controller: 'BidsController',
-        controllerAs: 'vm',
-        resolve: {
-          bidResolve: newBid
-        },
-        data: {
-          roles: ['user', 'admin'],
-        }
-      })
       .state('bids.view', {
         url: '/:bidId',
         templateUrl: 'modules/Bids/client/views/view-bid.client.view.html',

@@ -16,7 +16,7 @@
         <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
         <p class="list-group-item-text" ng-bind="auction.content"></p>
       </a>
-      <button ui-sref="bids.place({ auctionId: auction._id })">Bid Now</button>
+      <button ui-sref="bids.create(auction)">Bid Now</button>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?

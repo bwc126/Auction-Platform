@@ -9,14 +9,14 @@
         Bid on
         <span ng-bind="bid.created | date:'mediumDate'"></span>
         by
-        <span ng-if="bid.user" ng-bind="auction.user.displayName"></span>
+        <span ng-if="bid.user" ng-bind="bid.user.displayName"></span>
         <span ng-if="!bid.user">Deleted User</span>
       </small>
       <h4 class="list-group-item-heading" ng-bind="bid.title"></h4>
     </a>
     <div ng-show="vm.bid.isCurrentUserOwner">Delete</div>
   </div>
-  <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
+  <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">
     No bids yet, why don't you <a ui-sref="bids.create">create one</a>?
   </div>
 </section>
