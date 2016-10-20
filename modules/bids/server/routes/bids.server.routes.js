@@ -19,6 +19,5 @@ module.exports = function (app) {
     .delete(bids.delete);
 
   // Finish by binding the auction middleware
-  app.param('auctionId', auctions.auctionByID);
   app.param('bidId', bids.bidByID);
 };

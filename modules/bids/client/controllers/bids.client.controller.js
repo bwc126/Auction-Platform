@@ -21,7 +21,7 @@
     // Remove existing Bid
     function remove() {
       if (confirm('Are you sure you want to delete?')) {
-        vm.auction.$remove($state.go('auctions.list'));
+        vm.auction.$remove($state.go('bids.list'));
       }
     }
 
@@ -40,7 +40,7 @@
       }
 
       function successCallback(res) {
-        $state.go('auctions.view', {
+        $state.go('bids.view', {
           bidId: res._id
         });
       }

@@ -3,18 +3,20 @@
     <h1>Auctions</h1>
   </div>
   <div class="list-group row">
-    <a ng-repeat="auction in vm.auctions" ui-sref="auctions.view({ auctionId: auction._id })" class="list-group-item col-md-3">
-      <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="auction.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="auction.user" ng-bind="auction.user.displayName"></span>
-        <span ng-if="!auction.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
-      <p class="list-group-item-text" ng-bind="auction.content"></p>
-    </a>
+    <div ng-repeat="auction in vm.auctions"  class="list-group-item col-xs-4 col-md-2">
+      <a ui-sref="auctions.view({ auctionId: auction._id })">
+        <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
+        <small class="list-group-item-text">
+          Posted on
+          <span ng-bind="auction.created | date:'mediumDate'"></span>
+          by
+          <span ng-if="auction.user" ng-bind="auction.user.displayName"></span>
+          <span ng-if="!auction.user">Deleted User</span>
+        </small>
+        <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
+        <p class="list-group-item-text" ng-bind="auction.content"></p>
+      </a>
+      <button ui-sref="bids.place({ auctionId: auction._id })">Bid Now</button>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?
