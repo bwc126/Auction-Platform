@@ -23,20 +23,6 @@
           pageTitle: 'Bids List'
         }
       })
-      .state('bids.create', {
-        url: '/create',
-        templateUrl: 'modules/bids/client/views/form-bid.client.view.html',
-        controller: 'BidsController',
-        controllerAs: 'vm',
-        resolve: {
-          bidResolve: newBid
-        },
-        data: {
-          roles: ['user', 'admin'],
-          pageTitle : 'New Bid',
-          auction: arguments[0]
-        }
-      })
       .state('bids.cancel', {
         url: '/:bidId/cancel',
         templateUrl: 'modules/bids/client/views/cancel-bid.client.view.html',

@@ -15,34 +15,28 @@ exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/auctions',
+      resources: '/api/auctions/:auctionId/bids',
       permissions: '*'
     }, {
-      resources: '/api/auctions/:auctionId',
-      permissions: '*'
-    }, {
-      resources: '/api/auctions/:auctionId/picture',
+      resources: '/api/auctions/:auctionId/:bidId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/auctions',
+      resources: '/api/auctions/:auctionId/bids',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/auctions/:auctionId',
+      resources: '/api/auctions/:auctionId/:bidId',
       permissions: ['get']
-    }, {
-      resources: '/api/auctions/:auctionId/picture',
-      permissions: '*'
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/auctions',
+      resources: '/api/auctions/:auctionId/bids',
       permissions: ['get']
     }, {
-      resources: '/api/auctions/:auctionId',
+      resources: '/api/auctions/:auctionId/:bidId',
       permissions: ['get']
     }]
   }]);

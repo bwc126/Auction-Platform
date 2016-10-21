@@ -89,4 +89,5 @@
   function newAuction(AuctionsService) {
     return new AuctionsService();
   }
+
 })();

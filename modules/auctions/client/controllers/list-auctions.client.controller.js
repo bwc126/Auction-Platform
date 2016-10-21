@@ -11,5 +11,11 @@
     var vm = this;
 
     vm.auctions = AuctionsService.query();
+    vm.placeBid = placeBid;
+
+    function placeBid() {
+      console.log('bid button pushed');
+
+    }
   }
 })();

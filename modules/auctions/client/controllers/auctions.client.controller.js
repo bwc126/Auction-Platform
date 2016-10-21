@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['$scope', '$state', '$window', '$timeout', 'auctionResolve', 'Authentication'];
+  AuctionsController.$inject = ['$scope', '$state', '$window', '$timeout', '$http', 'auctionResolve', 'Authentication'];
 
-  function AuctionsController($scope, $state, $window, $timeout, auction, Authentication) {
+  function AuctionsController($scope, $state, $window, $timeout, $http, auction, Authentication) {
     var vm = this;
 
     vm.auction = auction;
@@ -16,6 +16,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.placeBid = placeBid;
 
     // Remove existing Auction
     function remove() {
@@ -52,6 +53,11 @@
     // Place bid
     function placeBid() {
       console.log('bid button pushed');
+      console.dir($http);
+      $http.post('api/auctions/'+vm.auction._id+'/bids').then(function(response) {
+        console.dir(response);
+      });
+
     }
   }
 })();

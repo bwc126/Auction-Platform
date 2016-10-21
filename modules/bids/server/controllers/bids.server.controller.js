@@ -16,7 +16,6 @@ var path = require('path'),
 exports.create = function (req, res) {
   var bid = new Bid(req.body);
   bid.user = req.user;
-  bid.bid = req.bid;
   bid.save(function (err) {
     if (err) {
       return res.status(400).send({
