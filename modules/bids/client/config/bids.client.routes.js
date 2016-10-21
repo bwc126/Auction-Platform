@@ -33,7 +33,8 @@
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle : 'New Bid'
+          pageTitle : 'New Bid',
+          auction: arguments[0]
         }
       })
       .state('bids.cancel', {

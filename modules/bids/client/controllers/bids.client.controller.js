@@ -16,7 +16,9 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
-    vm.placeBid = placeBid;
+
+    vm.bid.auction = $state.current.data.auction;
+    vm.bid.user = Authentication.user;
 
     // Remove existing Bid
     function remove() {
