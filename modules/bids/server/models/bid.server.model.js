@@ -20,7 +20,7 @@ var BidSchema = new Schema({
   },
   amount: {
     type: Number,
-    default: 0
+    default: 1.00
   },
   user: {
     type: Schema.ObjectId,

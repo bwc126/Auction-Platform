@@ -11,16 +11,29 @@
     $stateProvider
       .state('bids', {
         abstract: true,
-        url: ':auctionId/bids',
+        url: '/:auctionId/bids',
         template: '<ui-view/>'
       })
-      .state('bids.list', {
-        url: '',
+      .state('bids.listByUser', {
+        url: '/../../myBids',
         templateUrl: 'modules/bids/client/views/list-bids.client.view.html',
-        controller: 'BidsListController',
+        controller: 'UserBidsListController',
         controllerAs: 'vm',
         data: {
           pageTitle: 'Bids List'
+        }
+      })
+      .state('bids.listByAuction', {
+        url: '',
+        templateUrl: 'modules/bids/client/views/list-bids.client.view.html',
+        controller: 'AuctionBidsListController',
+        controllerAs: 'vm',
+        resolve: {
+          auctionResolve: getAuction
+        },
+        data: {
+          pageTitle: 'Bids List',
+          auction: '{{ auctionResolve }}'
         }
       })
       .state('bids.cancel', {
@@ -55,6 +68,14 @@
   function getBid($stateParams, BidsService) {
     return BidsService.get({
       bidId: $stateParams.bidId
+    }).$promise;
+  }
+
+  getAuction.$inject = ['$stateParams', 'AuctionsService'];
+
+  function getAuction($stateParams, AuctionsService) {
+    return AuctionsService.get({
+      auctionId: $stateParams.auctionId
     }).$promise;
   }
 

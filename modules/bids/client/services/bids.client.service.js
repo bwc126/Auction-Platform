@@ -3,12 +3,14 @@
 
   angular
     .module('bids.services')
-    .factory('BidsService', BidsService);
+    .factory('AuctionBidsService', AuctionBidsService)
+    .factory('UserBidsService', UserBidsService);
 
-  BidsService.$inject = ['$resource'];
+  AuctionBidsService.$inject = ['$resource'];
 
-  function BidsService($resource) {
-    return $resource('api/bids/:bidId', {
+  function AuctionBidsService($resource) {
+    return $resource('api/:auctionId/bids/:bidId', {
+      auctionId: '@auction._id',
       bidId: '@_id'
     }, {
       update: {
@@ -16,4 +18,15 @@
       }
     });
   }
+
+  UserBidsService.$inject = ['$resource'];
+
+  function UserBidsService($resource) {
+    return $resource('api/bids/myBids', {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
+
 })();

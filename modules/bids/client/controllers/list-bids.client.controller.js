@@ -3,13 +3,22 @@
 
   angular
     .module('bids')
-    .controller('BidsListController', BidsListController);
+    .controller('AuctionBidsListController', AuctionBidsListController)
+    .controller('UserBidsListController', UserBidsListController);
 
-  BidsListController.$inject = ['BidsService'];
+  AuctionBidsListController.$inject = ['AuctionBidsService', 'auctionResolve'];
 
-  function BidsListController(BidsService) {
+  function AuctionBidsListController(AuctionBidsService, auction) {
     var vm = this;
 
-    vm.bids = BidsService.query();
+    vm.bids = AuctionBidsService.query({ 'auction' : auction });
+  }
+
+  UserBidsListController.$inject = ['UserBidsService', 'Authentication'];
+
+  function UserBidsListController(UserBidsService, Authentication) {
+    var vm = this;
+    var user = Authentication.user;
+    vm.bids = UserBidsService.query({ 'user' : user });
   }
 })();

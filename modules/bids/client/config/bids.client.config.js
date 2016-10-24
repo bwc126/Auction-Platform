@@ -18,14 +18,7 @@
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'bids', {
       title: 'View Bids',
-      state: 'bids.list'
-    });
-
-    // Add the dropdown create item
-    Menus.addSubMenuItem('topbar', 'bids', {
-      title: 'New Bid',
-      state: 'bids.create',
-      roles: ['user']
+      state: 'bids.listByUser'
     });
   }
 })();

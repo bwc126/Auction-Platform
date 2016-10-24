@@ -16,6 +16,7 @@ var path = require('path'),
 exports.create = function (req, res) {
   var bid = new Bid(req.body);
   bid.user = req.user;
+  bid.auction = req.auction;
   bid.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -82,10 +83,11 @@ exports.delete = function (req, res) {
 };
 
 /**
- * List of Bids
+ * List of Bids by Auction
  */
-exports.list = function (req, res) {
-  Bid.find().sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+exports.listByAuction = function (req, res) {
+  console.dir(req);
+  Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -95,7 +97,21 @@ exports.list = function (req, res) {
     }
   });
 };
-
+/**
+ * List of Bids by User
+ */
+exports.listByUser = function (req, res) {
+  console.dir(req);
+  Bid.find({ user: req.user._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(bids);
+    }
+  });
+};
 /**
  * Bid middleware
  */
