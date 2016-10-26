@@ -15,12 +15,13 @@
         template: '<ui-view/>'
       })
       .state('bids.listByUser', {
-        url: '/../../myBids',
+        url: '/../../userBids',
+        // url: '/myBids', TODO: Consider moving this 'state'
         templateUrl: 'modules/bids/client/views/list-bids.client.view.html',
         controller: 'UserBidsListController',
         controllerAs: 'vm',
         data: {
-          pageTitle: 'Bids List'
+          pageTitle: 'View Bids'
         }
       })
       .state('bids.listByAuction', {
@@ -32,7 +33,7 @@
           auctionResolve: getAuction
         },
         data: {
-          pageTitle: 'Bids List',
+          pageTitle: 'View Bids for {{ auctionResolve.title }}',
           auction: '{{ auctionResolve }}'
         }
       })
@@ -74,6 +75,7 @@
   getAuction.$inject = ['$stateParams', 'AuctionsService'];
 
   function getAuction($stateParams, AuctionsService) {
+    console.dir($stateParams);
     return AuctionsService.get({
       auctionId: $stateParams.auctionId
     }).$promise;

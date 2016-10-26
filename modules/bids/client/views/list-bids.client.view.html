@@ -3,20 +3,16 @@
     <h1>Bids</h1>
   </div>
   <div class="list-group row">
-    <a ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="list-group-item col-md-3">
-      <img ng-src="{{bid.user.profileImageURL}}" alt="{{bid.title}}"></img>
+    <!-- <a ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="list-group-item col-md-3">
       <small class="list-group-item-text">
         Bid on
         <span ng-bind="bid.created | date:'mediumDate'"></span>
         by
-        <span ng-if="bid.user" ng-bind="bid.user.displayName"></span>
-        <span ng-if="!bid.user">Deleted User</span>
       </small>
       <h4 class="list-group-item-heading" ng-bind="bid.title"></h4>
-    </a>
-    <div ng-show="vm.bid.isCurrentUserOwner">Delete</div>
+    </a> -->
   </div>
-  <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">
-    No bids yet, why don't you <a ui-sref="bids.create">create one</a>?
-  </div>
+  <!-- <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">
+    No bids yet, why don't you create one?
+  </div> -->
 </section>

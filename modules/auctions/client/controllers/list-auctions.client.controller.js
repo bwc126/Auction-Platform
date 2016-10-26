@@ -14,9 +14,9 @@
     vm.placeBid = placeBid;
 
     function placeBid(auctionID) {
-      console.log('bid button pushed');
+
       $http.post('api/auctions/' + auctionID + '/bids').then(function(response) {
-        console.dir(response);
+
       });
 
     }

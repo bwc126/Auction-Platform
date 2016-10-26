@@ -86,7 +86,7 @@ exports.delete = function (req, res) {
  * List of Bids by Auction
  */
 exports.listByAuction = function (req, res) {
-  console.dir(req);
+
   Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
@@ -101,13 +101,15 @@ exports.listByAuction = function (req, res) {
  * List of Bids by User
  */
 exports.listByUser = function (req, res) {
-  console.dir(req);
-  Bid.find({ user: req.user._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+
+  Bid.find({ user: req.user._id }).sort('-created').exec(function (err, bids) {
     if (err) {
+      console.log('#########################');
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!');
       res.json(bids);
     }
   });
