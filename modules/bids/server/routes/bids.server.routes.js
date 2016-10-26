@@ -18,6 +18,9 @@ module.exports = function (app) {
     .get(bids.read)
     .delete(bids.delete);
 
+  app.route('/api/bids/:auctionId/amount').all(bidsPolicy.isAllowed)
+    .get(bids.amount);
+
   app.route('/api/bids/myBids').all(bidsPolicy.isAllowed)
     .get(bids.listByUser);
 

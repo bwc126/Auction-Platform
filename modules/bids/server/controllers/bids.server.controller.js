@@ -104,16 +104,31 @@ exports.listByUser = function (req, res) {
 
   Bid.find({ user: req.user._id }).sort('-created').exec(function (err, bids) {
     if (err) {
-      console.log('#########################');
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!');
       res.json(bids);
     }
   });
 };
+/**
+  * Current gets the current bid by calculating from all bids placed
+  */
+exports.amount = function (req, res) {
+
+  Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(1.00 * Math.pow(1.01, bids.length));
+    }
+  });
+
+};
+
 /**
  * Bid middleware
  */

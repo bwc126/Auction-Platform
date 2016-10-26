@@ -21,6 +21,9 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/auctions/:auctionId/:bidId',
       permissions: '*'
     }, {
+      resources: '/api/bids/:auctionId/amount',
+      permissions: ['*']
+    }, {
       resources: '/api/bids/myBids',
       permissions: ['*']
     }]
@@ -32,6 +35,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/auctions/:auctionId/:bidId',
       permissions: ['get', 'delete']
+    }, {
+      resources: '/api/bids/:auctionId/amount',
+      permissions: ['get']
     }, {
       resources: '/api/bids/myBids',
       permissions: ['get']

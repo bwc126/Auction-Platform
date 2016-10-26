@@ -15,7 +15,7 @@
         template: '<ui-view/>'
       })
       .state('bids.listByUser', {
-        url: '/../../userBids',
+        url: '/muh-bids',
         // url: '/myBids', TODO: Consider moving this 'state'
         templateUrl: 'modules/bids/client/views/list-bids.client.view.html',
         controller: 'UserBidsListController',

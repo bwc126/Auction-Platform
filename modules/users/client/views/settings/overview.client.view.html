@@ -7,8 +7,9 @@
       <small class="list-group-item-text">
         Bid on
         <span ng-bind="bid.created | date:'mediumDate'"></span>
+        by
       </small>
-      <h4 class="list-group-item-heading" ng-bind="bid.auction.title"></h4>
+      <h4 class="list-group-item-heading" ng-bind="bid.title"></h4>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">

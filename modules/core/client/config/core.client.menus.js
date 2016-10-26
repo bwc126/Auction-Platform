@@ -21,6 +21,11 @@
     });
 
     Menus.addSubMenuItem('account', 'settings', {
+      title: 'User Overview',
+      state: 'settings.overview'
+    });
+
+    Menus.addSubMenuItem('account', 'settings', {
       title: 'Edit Profile',
       state: 'settings.profile'
     });

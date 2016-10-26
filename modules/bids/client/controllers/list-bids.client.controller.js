@@ -18,17 +18,14 @@
 
   function UserBidsListController($http, UserBidsService, Authentication) {
     var vm = this;
-    console.log("UserBidsList active");
 
     $http.get('api/users/me').then(function(response) {
-      console.dir(response.data);
       $http({
         method : 'GET',
         url : 'api/bids/myBids',
         data : response.data
       }).then(function(response) {
         vm.bids = response.data;
-        console.dir(vm.bids);
       });
     });
 

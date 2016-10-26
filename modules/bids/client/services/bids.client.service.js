@@ -10,8 +10,9 @@
   BidsService.$inject = ['$resource'];
 
   function BidsService($resource) {
-    return $resource('api/auctions/:auctionId', {
-      auctionId: '@_id'
+    return $resource('api/auctions/:auctionId/bids/:bidId', {
+      auctionId: '@auction._id',
+      bidId: '@_id'
     }, {
       update: {
         method: 'PUT'
@@ -22,9 +23,8 @@
   AuctionBidsService.$inject = ['$resource'];
 
   function AuctionBidsService($resource) {
-    return $resource('api/:auctionId/bids/:bidId', {
+    return $resource('api/auctions/:auctionId/bids', {
       auctionId: '@auction._id',
-      bidId: '@_id'
     }, {
       update: {
         method: 'PUT'

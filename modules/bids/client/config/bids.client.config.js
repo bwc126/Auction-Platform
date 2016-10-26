@@ -17,7 +17,7 @@
 
     // Add the dropdown list item
     Menus.addSubMenuItem('topbar', 'bids', {
-      title: 'View Poop',
+      title: 'User Bids',
       state: 'bids.listByUser'
     });
   }

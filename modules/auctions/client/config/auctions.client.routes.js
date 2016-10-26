@@ -73,6 +73,18 @@
         data:{
           pageTitle: 'Auction {{ auctionResolve.title }}'
         }
+      })
+      .state('auctions.view-bids', {
+        url: '/:auctionId/bids',
+        templateUrl: 'modules/bids/client/views/list-bids.client.view.html',
+        controller: 'AuctionsBidController',
+        controllerAs: 'vm',
+        resolve: {
+          auctionResolve: getAuction
+        },
+        data:{
+          pageTitle: 'Auction {{ auctionResolve.title }}'
+        }
       });
   }
 
