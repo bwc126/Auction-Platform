@@ -97,6 +97,14 @@ var UserSchema = new Schema({
   },
   resetPasswordExpires: {
     type: Date
+  },
+  bidTotal: {
+    type: Number,
+    default: 0
+  },
+  authorizedAmount: {
+    type: Number,
+    default: 0
   }
 });
 
