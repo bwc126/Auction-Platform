@@ -4,3 +4,9 @@
   height: fill;
 
 }
+
+.list-group-item {
+
+  max-height: 90%;
+
+}

@@ -5,11 +5,11 @@
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
 
-  AuctionsListController.$inject = ['AuctionsService', '$http'];
+  AuctionsListController.$inject = ['$scope', 'AuctionsService', '$http'];
 
-  function AuctionsListController(AuctionsService, $http) {
+  function AuctionsListController($scope, AuctionsService, $http) {
     var vm = this;
-
+    var updatePeriod = 900;
     vm.auctions = AuctionsService.query();
     vm.placeBid = placeBid;
 
@@ -23,15 +23,20 @@
     function getCurrent(auction) {
       console.log('get current running');
       $http.get('/api/bids/'+auction._id+'/amount').then(function(response) {
-        auction.amount = response.data;
+        auction.amount = response.data.toFixed(2);
       });
 
     }
-    window.setInterval(function() {
+    var bidUpdate = window.setInterval(function() {
       vm.auctions.forEach(function(auction) {
         console.log('forEach called');
         getCurrent(auction);
       });
-    }, 200);
+    }, updatePeriod);
+
+    $scope.$on('$destroy',function() {
+      window.clearInterval(bidUpdate);
+    });
+
   }
 })();
