@@ -21,7 +21,6 @@
 
     }
     function getCurrent(auction) {
-      console.log('get current running');
       $http.get('/api/bids/'+auction._id+'/amount').then(function(response) {
         auction.amount = response.data.toFixed(2);
       });
@@ -29,7 +28,6 @@
     }
     var bidUpdate = window.setInterval(function() {
       vm.auctions.forEach(function(auction) {
-        console.log('forEach called');
         getCurrent(auction);
       });
     }, updatePeriod);
