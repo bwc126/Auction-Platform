@@ -21,6 +21,9 @@ module.exports = function (app) {
   app.route('/api/bids/:auctionId/amount').all(bidsPolicy.isAllowed)
     .get(bids.amount);
 
+  app.route('/api/bids/:auctionId/leading').all(bidsPolicy.isAllowed)
+    .get(bids.leading);
+
   app.route('/api/bids/myBids').all(bidsPolicy.isAllowed)
     .get(bids.listByUser);
 

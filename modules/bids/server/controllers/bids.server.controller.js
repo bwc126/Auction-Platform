@@ -10,22 +10,60 @@ var path = require('path'),
   config = require(path.resolve('./config/config')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+// var getAmount = function(auction) {
+//   Bid.findOne({ auction: auction._id }).sort({ 'created' : -1 }).exec(function (err, bids) {
+//     if (err) {
+//       return status(400).send({
+//         message: errorHandler.getErrorMessage(err)
+//       });
+//     } else {
+//       if (!bids) {
+//         console.log('no bids found', 'line 21');
+//         return 1.00;
+//       } else {
+//         console.log('bid found', 'line 24');
+//         return bids.amount;
+//       }
+//     }
+//   });
+//
+// };
 /**
  * Create an bid
  */
 exports.create = function (req, res) {
   var bid = new Bid(req.body);
-  console.log(req.body.amount);
+  var BID_INCREMENT = 1.01;
   bid.user = req.user;
   bid.auction = req.auction;
-  bid.amount = Number(req.body.amount);
-  bid.save(function (err) {
+  // bid.amount = Math.max(Number(req.body.amount),getAmount(req.auction));
+  // This is an instantiation of mongoose's save function for the bid schema, in a form that we can use easily above.
+  var save = function() {
+    bid.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(bid);
+      }
+    });
+  };
+  // We need to find the current leading bid amount before we can save a new one
+  Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).exec(function (err, bids) {
+    if (err) {
+      return status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      // Now that we found the bid, or not, we can set the bid amount based on the old one, after incrementing by our bid increment. Then, we call mongoose's save function for the bid.
+      if (!bids) {
+        bid.amount = 1.00;
+        save();
+      } else {
+        bid.amount = bids.amount * BID_INCREMENT;
+        save();
+      }
     }
   });
 };
@@ -119,22 +157,35 @@ exports.listByUser = function (req, res) {
   */
 exports.amount = function (req, res) {
 
-  Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bids) {
+  Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bid) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      if (!bids) {
+      if (!bid) {
         res.json(1.00);
       } else {
-        res.json(bids.amount);
+        res.json(bid.amount);
       }
     }
   });
 
 };
 
+exports.leading = function (req, res) {
+
+  Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bid) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+        res.json(bid);
+    }
+  });
+
+};
 /**
  * Bid middleware
  */
