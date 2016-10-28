@@ -15,8 +15,10 @@ var path = require('path'),
  */
 exports.create = function (req, res) {
   var bid = new Bid(req.body);
+  console.log(req.body.amount);
   bid.user = req.user;
   bid.auction = req.auction;
+  bid.amount = Number(req.body.amount);
   bid.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -117,13 +119,17 @@ exports.listByUser = function (req, res) {
   */
 exports.amount = function (req, res) {
 
-  Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+  Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(1.00 * Math.pow(1.01, bids.length));
+      if (!bids.amount) {
+        res.json(1.00);
+      } else {
+        res.json(bids.amount);
+      }
     }
   });
 

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-
+  var BID_INCREMENT = 1.01;
   angular
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
@@ -13,10 +13,17 @@
     vm.auctions = AuctionsService.query();
     vm.placeBid = placeBid;
 
-    function placeBid(auctionID) {
+    function placeBid(auction) {
 
-      $http.post('api/auctions/' + auctionID + '/bids').then(function(response) {
-
+      console.log(auction.amount);
+      $http({
+        method : 'POST',
+        url : 'api/auctions/' + auction._id + '/bids',
+        data : {
+          'amount' : auction.amount*BID_INCREMENT.toString()
+        },
+      }).then(function(response) {
+        console.log(response);
       });
 
     }

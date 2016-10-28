@@ -17,7 +17,7 @@
         <p class="list-group-item-text" ng-bind="auction.content"></p>
         <span ng-bind="auction.amount"></span>
       </a>
-      <button ng-click="vm.placeBid(auction._id)">Bid Now</button>
+      <button ng-click="vm.placeBid(auction)">Bid Now</button>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?
