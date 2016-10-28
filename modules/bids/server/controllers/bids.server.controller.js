@@ -125,7 +125,7 @@ exports.amount = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      if (!bids.amount) {
+      if (!bids) {
         res.json(1.00);
       } else {
         res.json(bids.amount);

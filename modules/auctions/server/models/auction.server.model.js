@@ -33,6 +33,10 @@ var AuctionSchema = new Schema({
     type: String,
     default: 'modules/auctions/client/img/default.png'
   },
+  amount: {
+    type: Number,
+    default: 1.00
+  }
 });
 
 mongoose.model('Auction', AuctionSchema);
