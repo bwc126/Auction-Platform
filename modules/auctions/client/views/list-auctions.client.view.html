@@ -6,6 +6,7 @@
     <div ng-repeat="auction in vm.auctions"  class="list-group-item col-xs-4 col-md-2">
       <a ui-sref="auctions.view({ auctionId: auction._id })">
         <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
+        <br>
         <small class="list-group-item-text">
           Posted on
           <span ng-bind="auction.created | date:'mediumDate'"></span>
@@ -17,7 +18,8 @@
         <p class="list-group-item-text" ng-bind="auction.content"></p>
         <span ng-bind="auction.amount"></span>
       </a>
-      <button ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)">Bid Now</button>
+      <br>
+      <button ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)" class='pull-right'>Bid Now</button>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?
