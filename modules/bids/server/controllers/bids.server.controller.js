@@ -40,12 +40,12 @@ exports.create = function (req, res) {
   // This is an instantiation of mongoose's save function for the bid schema, in a form that we can use easily above.
   var save = function() {
     bid.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(bid);
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(bid);
       }
     });
   };
@@ -183,7 +183,7 @@ exports.leading = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-        res.json(bid);
+      res.json(bid);
     }
   });
 
