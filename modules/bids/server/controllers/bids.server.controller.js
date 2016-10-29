@@ -172,7 +172,9 @@ exports.amount = function (req, res) {
   });
 
 };
-
+/**
+  * Leading gets the leading bid for an auction.
+  */
 exports.leading = function (req, res) {
 
   Bid.findOne({ auction: req.auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bid) {
