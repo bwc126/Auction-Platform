@@ -57,7 +57,7 @@ exports.changeProfilePicture = function (req, res) {
   var user = req.user;
   var upload = multer(config.uploads.profileUpload).single('newProfilePicture');
   var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
-  
+
   // Filtering to upload only images
   upload.fileFilter = profileUploadFileFilter;
 
@@ -99,4 +99,22 @@ exports.changeProfilePicture = function (req, res) {
  */
 exports.me = function (req, res) {
   res.json(req.user || null);
+};
+/**
+* Update the User's total of valid bids
+*/
+exports.updateUserTotal = function (user, res) {
+
+  var bidTotal;
+  // get all the auctions, loop through them
+  // get the leading bids, add their amounts to bidTotal;
+  user.bidTotal = bidTotal;
+  user.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+  });
+
 };
