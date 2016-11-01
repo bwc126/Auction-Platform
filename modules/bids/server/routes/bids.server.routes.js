@@ -3,10 +3,11 @@
 /**
  * Module dependencies
  */
-var bidsPolicy = require('../policies/bids.server.policy'),
+var path = require('path'),
+  bidsPolicy = require('../policies/bids.server.policy'),
   bids = require('../controllers/bids.server.controller'),
-  auctions = require('../../../auctions/server/controllers/auctions.server.controller');
-
+  auctions = require('../../../auctions/server/controllers/auctions.server.controller'),
+  users = require(path.resolve('./modules/users/server/controllers/users.server.controller'));
 module.exports = function (app) {
   // Bids collection routes
   app.route('/api/auctions/:auctionId/bids').all(bidsPolicy.isAllowed)
@@ -30,4 +31,5 @@ module.exports = function (app) {
   // Finish by binding the auction, bid middleware
   app.param('auctionId', auctions.auctionByID);
   app.param('bidId', bids.bidByID);
+  app.use('/api/bids/leading', auctions.allAuctions, bids.leadingBids, users.updateUserTotal);
 };

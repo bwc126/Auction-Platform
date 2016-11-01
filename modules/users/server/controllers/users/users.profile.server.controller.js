@@ -10,7 +10,9 @@ var _ = require('lodash'),
   mongoose = require('mongoose'),
   multer = require('multer'),
   config = require(path.resolve('./config/config')),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  auctions = require(path.resolve('./modules/auctions/server/controllers/auctions.server.controller')),
+  bids = require(path.resolve('./modules/bids/server/controllers/bids.server.controller'));
 
 /**
  * Update user details
@@ -103,18 +105,25 @@ exports.me = function (req, res) {
 /**
 * Update the User's total of valid bids
 */
-exports.updateUserTotal = function (user, res) {
-
-  var bidTotal;
+exports.updateUserTotal = function (req, res) {
+  var user = req.user;
+  console.log('updateUserTotal req:',req);
   // get all the auctions, loop through them
   // get the leading bids, add their amounts to bidTotal;
-  user.bidTotal = bidTotal;
+  user.bidTotal += req.amount;
   user.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else {
+      req.login(user, function (err) {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.json(user);
+        }
+      });
     }
   });
-
 };

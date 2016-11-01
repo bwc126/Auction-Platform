@@ -136,7 +136,6 @@ exports.delete = function (req, res) {
     }
   });
 };
-
 /**
  * List of Auctions
  */
@@ -151,7 +150,21 @@ exports.list = function (req, res) {
     }
   });
 };
-
+/**
+ * Middleware function for listing auctions.
+ */
+exports.allAuctions = function (req, res, next) {
+  Auction.find().sort('-created').exec(function (err, auctions) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      req.auctions = auctions;
+    }
+    next();
+  });
+};
 /**
  * Auction middleware
  */

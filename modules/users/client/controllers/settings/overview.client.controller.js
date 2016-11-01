@@ -28,10 +28,19 @@
         }
       });
     }
+    function getUserTotal() {
+      console.log('inside getUserTotal');
+      $http.get('api/bids/leading').then(function(response) {
+        console.log(response);
+      })
+    }
     $http.get('api/users/me').then(function(response) {
       vm.user = response.data;
       getLeadingOfAllAuctions();
+      console.log('about to call getUserTotal');
+      getUserTotal();
     });
+
     // function updateTotal() {
     //   var numBids = vm.bids.length;
     //   var total;

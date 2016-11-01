@@ -189,6 +189,30 @@ exports.leading = function (req, res) {
 
 };
 /**
+ * leadingBid is middleware for retrieving a user's leading bids.
+ */
+exports.leadingBids = function (req, res, next) {
+  var numAuctions = req.auctions.length;
+  var bids = [];
+  function getBid(auction) {
+    Bid.findOne({ auction: auction._id }).sort({ 'created' : -1 }).exec(function (err, bid) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        bids.push(bid);
+      }
+    });
+  }
+  for (var i = 0; i < numAuctions; i++) {
+    getBid(req.auctions[i]);
+  }
+  req.bids = bids;
+  next();
+
+};
+/**
  * Bid middleware
  */
 exports.bidByID = function (req, res, next, id) {
