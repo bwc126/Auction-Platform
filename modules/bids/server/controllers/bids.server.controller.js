@@ -194,22 +194,34 @@ exports.leading = function (req, res) {
 exports.leadingBids = function (req, res, next) {
   var numAuctions = req.auctions.length;
   var bids = [];
+  var done = false;
+  var b = 0;
+  function finish() {
+    console.log(bids);
+    req.bids = bids;
+    next();
+  }
   function getBid(auction) {
-    Bid.findOne({ auction: auction._id }).sort({ 'created' : -1 }).exec(function (err, bid) {
+    Bid.findOne({ auction: auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName').exec(function (err, bid) {
+      b+=1;
       if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
+        return next(err);
+      } else if (!bid) {
+        return res.status(404).send({
+          message: 'No bid with that identifier has been found'
         });
-      } else {
+      } else if (req.user._id.equals(bid.user._id)) {
         bids.push(bid);
+        if (b === numAuctions - 1) {
+          console.log('CALLING FINISH');
+          finish();
+        }
       }
     });
   }
   for (var i = 0; i < numAuctions; i++) {
     getBid(req.auctions[i]);
   }
-  req.bids = bids;
-  next();
 
 };
 /**

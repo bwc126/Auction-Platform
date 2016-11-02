@@ -11,11 +11,13 @@
     /*jshint validthis: true */
     var vm = this;
     vm.bids = [];
+    vm.total = 0;
     function getLeading(auctionID) {
       $http.get('api/bids/'+auctionID+'/leading').then(function(response) {
         var leadingBid = response.data;
         if (leadingBid.user._id === vm.user._id) {
           vm.bids.push(leadingBid);
+          
         }
       });
     }
@@ -32,7 +34,7 @@
       console.log('inside getUserTotal');
       $http.get('api/bids/leading').then(function(response) {
         console.log(response);
-      })
+      });
     }
     $http.get('api/users/me').then(function(response) {
       vm.user = response.data;

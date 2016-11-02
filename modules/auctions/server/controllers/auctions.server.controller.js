@@ -156,12 +156,13 @@ exports.list = function (req, res) {
 exports.allAuctions = function (req, res, next) {
   Auction.find().sort('-created').exec(function (err, auctions) {
     if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+      return next(err);
+    } else if (!auctions) {
+      return res.status(404).send({
+        message: 'No auctions have been found'
       });
-    } else {
-      req.auctions = auctions;
     }
+    req.auctions = auctions;
     next();
   });
 };

@@ -107,21 +107,28 @@ exports.me = function (req, res) {
 */
 exports.updateUserTotal = function (req, res) {
   var user = req.user;
-  console.log('updateUserTotal req:',req);
+  var total = 0;
+  console.log('UPDATE USER TOTAL: ',req.bids);
+  var numBids = req.bids.length;
+
+  for (var i = 0; i < numBids; i++) {
+    total += req.bids[i].amount;
+  }
+  user.bidTotal = total;
   // get all the auctions, loop through them
   // get the leading bids, add their amounts to bidTotal;
-  user.bidTotal += req.amount;
-  user.save(function (err) {
-    if (err) {
+
+  user.save(function (saveError) {
+    if (saveError) {
       return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
+        message: errorHandler.getErrorMessage(saveError)
       });
     } else {
       req.login(user, function (err) {
         if (err) {
-          res.status(400).send(err);
+          res.status = err;
         } else {
-          res.json(user);
+          res.user = user;
         }
       });
     }
