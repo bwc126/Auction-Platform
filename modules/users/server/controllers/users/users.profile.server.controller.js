@@ -102,35 +102,3 @@ exports.changeProfilePicture = function (req, res) {
 exports.me = function (req, res) {
   res.json(req.user || null);
 };
-/**
-* Update the User's total of valid bids
-*/
-exports.updateUserTotal = function (req, res) {
-  var user = req.user;
-  var total = 0;
-  console.log('UPDATE USER TOTAL: ',req.bids);
-  var numBids = req.bids.length;
-
-  for (var i = 0; i < numBids; i++) {
-    total += req.bids[i].amount;
-  }
-  user.bidTotal = total;
-  // get all the auctions, loop through them
-  // get the leading bids, add their amounts to bidTotal;
-
-  user.save(function (saveError) {
-    if (saveError) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(saveError)
-      });
-    } else {
-      req.login(user, function (err) {
-        if (err) {
-          res.status = err;
-        } else {
-          res.user = user;
-        }
-      });
-    }
-  });
-};
