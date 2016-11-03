@@ -62,6 +62,16 @@ angular.module('users').config(['$stateProvider',
           pageTitle: 'Signup'
         }
       })
+      .state('authentication.signup', {
+        url: '/signup/:referralId',
+        templateUrl: 'modules/users/client/views/authentication/signup.client.view.html',
+        resolve: {
+          referralResolve: getReferral
+        },
+        data: {
+          pageTitle: 'Signup'
+        }
+      })
       .state('authentication.signin', {
         url: '/signin?err',
         templateUrl: 'modules/users/client/views/authentication/signin.client.view.html',
@@ -108,4 +118,6 @@ angular.module('users').config(['$stateProvider',
         }
       });
   }
+
+  // TODO: Implement getReferral after referral module scaffolding
 ]);
