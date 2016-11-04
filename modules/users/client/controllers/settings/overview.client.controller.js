@@ -17,7 +17,7 @@
         var leadingBid = response.data;
         if (leadingBid.user._id === vm.user._id) {
           vm.bids.push(leadingBid);
-          
+
         }
       });
     }
