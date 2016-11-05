@@ -1,8 +1,14 @@
-'use strict';
+(function () {
+  'use strict';
 
 // Setting up route
-angular.module('users').config(['$stateProvider',
-  function ($stateProvider) {
+  angular
+    .module('users')
+    .config(routeConfig);
+
+  routeConfig.$inject = ['$stateProvider'];
+
+  function routeConfig($stateProvider) {
     // Users state routing
     $stateProvider
       .state('settings', {
@@ -120,4 +126,12 @@ angular.module('users').config(['$stateProvider',
   }
 
   // TODO: Implement getReferral after referral module scaffolding
-]);
+  getReferral.$inject = ['$stateParams', '$http'];
+
+  function getReferral($stateParams, $http) {
+    return $http.get('api/referrals/:referralId',{
+      referralId: $stateParams.referralId
+    }).$promise;
+  }
+
+})();

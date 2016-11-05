@@ -25,6 +25,22 @@ function UserBidsService($resource) {
   });
 }
 
+angular
+  .module('users')
+  .factory('ReferralsService', ReferralsService);
+
+  ReferralsService.$inject = ['$resource'];
+
+  function ReferralsService($resource) {
+    return $resource('api/referrals/:referralId', {
+      referralId: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
+
 //TODO this should be Users service
 angular.module('users.admin').factory('Admin', ['$resource',
   function ($resource) {
