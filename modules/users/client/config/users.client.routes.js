@@ -68,7 +68,7 @@
           pageTitle: 'Signup'
         }
       })
-      .state('authentication.signup', {
+      .state('authentication.signupreferral', {
         url: '/signup/:referralId',
         templateUrl: 'modules/users/client/views/authentication/signup.client.view.html',
         resolve: {
@@ -76,6 +76,7 @@
         },
         data: {
           pageTitle: 'Signup'
+          // TODO: Handle null case of referral id by either pointing to an empty object in .signup or a separate view and controller for signupreferral
         }
       })
       .state('authentication.signin', {

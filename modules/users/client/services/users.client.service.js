@@ -26,7 +26,7 @@ function UserBidsService($resource) {
 }
 
 angular
-  .module('users.services')
+  .module('users')
   .factory('ReferralsService', ReferralsService);
 
 ReferralsService.$inject = ['$resource'];

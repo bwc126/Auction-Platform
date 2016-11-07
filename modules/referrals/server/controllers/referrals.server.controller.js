@@ -75,3 +75,37 @@ exports.delete = function (req, res) {
     }
   });
 };
+/**
+ * List of Referrals
+ */
+exports.list = function (req, res) {
+  Referral.find().sort('-created').populate('user', 'displayName').exec(function (err, referrals) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(referrals);
+    }
+  });
+};
+exports.referralByID = function (req, res, next, id) {
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: 'Referral is invalid'
+    });
+  }
+
+  Referral.findById(id).populate('user', 'displayName').exec(function (err, referral) {
+    if (err) {
+      return next(err);
+    } else if (!referral) {
+      return res.status(404).send({
+        message: 'No referral with that identifier has been found'
+      });
+    }
+    req.referral = referral;
+    next();
+  });
+};
