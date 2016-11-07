@@ -126,10 +126,10 @@
   }
 
   // TODO: Implement getReferral after referral module scaffolding
-  getReferral.$inject = ['$stateParams', '$http'];
+  getReferral.$inject = ['$stateParams', 'ReferralsService'];
 
-  function getReferral($stateParams, $http) {
-    return $http.get('api/referrals/:referralId',{
+  function getReferral($stateParams, ReferralsService) {
+    return ReferralsService.get({
       referralId: $stateParams.referralId
     }).$promise;
   }
