@@ -56,6 +56,14 @@
           pageTitle: 'Settings picture'
         }
       })
+      .state('settings.referrals', {
+        url: '/referrals',
+        templateUrl: 'modules/users/client/views/settings/referrals.client.view.html',
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Settings referrals'
+        }
+      })
       .state('authentication', {
         abstract: true,
         url: '/authentication',
@@ -69,14 +77,13 @@
         }
       })
       .state('authentication.signupreferral', {
-        url: '/signup/:referralId',
-        templateUrl: 'modules/users/client/views/authentication/signup.client.view.html',
+        url: '/signup-ref/:referralId',
+        templateUrl: 'modules/users/client/views/authentication/signup-ref.client.view.html',
         resolve: {
           referralResolve: getReferral
         },
         data: {
           pageTitle: 'Signup'
-          // TODO: Handle null case of referral id by either pointing to an empty object in .signup or a separate view and controller for signupreferral
         }
       })
       .state('authentication.signin', {
