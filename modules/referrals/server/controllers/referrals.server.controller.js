@@ -36,7 +36,7 @@ exports.read = function (req, res) {
 
   // Add a custom field to the Referral, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Referral model.
-  referral.isCurrentUserOwner = req.user && referral.user_1 && referral.user_1._id.toString() === req.user_1._id.toString() ? true : false;
+  referral.isCurrentUserOwner = req.user && referral.user_1 && referral.user_1.toString() === req.user.toString() ? true : false;
 
   res.json(referral);
 };
@@ -89,6 +89,22 @@ exports.list = function (req, res) {
     }
   });
 };
+/**
+  * Referrals by user
+  */
+exports.referralsByUser = function (req, res) {
+
+  Referral.find({ user_1: req.user }).populate('user', 'displayName').exec(function (err, referrals) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(referrals);
+    }
+  });
+};
+
 exports.referralByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {

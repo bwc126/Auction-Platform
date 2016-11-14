@@ -32,8 +32,8 @@ angular
 ReferralsService.$inject = ['$resource'];
 
 function ReferralsService($resource) {
-  return $resource('api/referrals/:referralId', {
-    referralId: '@_id'
+  return $resource('api/referrals/byUser/:userId', {
+    userId: '@_id'
   }, {
     update: {
       method: 'PUT'

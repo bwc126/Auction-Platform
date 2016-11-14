@@ -10,16 +10,27 @@
   function ReferralsController($http, $scope) {
     var vm = this;
     $scope.referrals = [];
-    $scope.generateReferralLink = generateReferralLink;
-    var hyperlink = "";
-    function generateReferralLink() {
+
+    // This needs to be changed depending on the hosting environment
+    var domain = "http://localhost:3000";
+    var hyperlink = domain + "/authentication/signup-ref/";
+
+    $scope.generateReferral = function() {
       console.log('oh hai lonk i make');
       $http.post('api/referrals').then(function(response) {
         console.log(response);
         $scope.referrals.push(response.data);
+        generateLink(response.data);
       });
     };
 
+    function generateLink(referral) {
+      referral.url = hyperlink + referral._id;
+    }
+
+    function getReferrals() {
+      
+    }
 
 
   }

@@ -3,8 +3,9 @@
     <h1>Referrals</h1>
   </div>
   <div ng-repeat="referral in referrals">
+    <a ng-href="{{ referral.url }}">{{ referral.url }}</a>
     <p ng-bind="referral.created"></p>
   </div>
 
-  <button ng-click="generateReferralLink()">Generate Referral Link</button>
+  <button ng-click="generateReferral()">Generate Referral Link</button>
 </section>

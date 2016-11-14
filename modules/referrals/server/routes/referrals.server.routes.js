@@ -4,7 +4,9 @@
  * Module dependencies
  */
 var referralsPolicy = require('../policies/referrals.server.policy'),
-  referrals = require('../controllers/referrals.server.controller');
+  path = require('path'),
+  referrals = require('../controllers/referrals.server.controller'),
+  users = require(path.resolve('modules/users/server/controllers/users.server.controller'));
 
 module.exports = function (app) {
   // Referrals collection routes
@@ -18,6 +20,10 @@ module.exports = function (app) {
     .put(referrals.update)
     .delete(referrals.delete);
 
+  app.route('api/referrals/byUser/:userId').all(referralsPolicy.isAllowed)
+    .get(referrals.referralsByUser);
+
   // Finish by binding the referral middleware
   app.param('referralId', referrals.referralByID);
+  app.param('userId', users.userByID);
 };
