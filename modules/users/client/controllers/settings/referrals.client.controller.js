@@ -11,6 +11,7 @@
     var vm = this;
     $scope.referrals = [];
     $scope.generateReferralLink = generateReferralLink;
+    var hyperlink = "";
     function generateReferralLink() {
       console.log('oh hai lonk i make');
       $http.post('api/referrals').then(function(response) {
