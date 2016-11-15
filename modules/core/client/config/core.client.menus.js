@@ -45,6 +45,11 @@
       state: 'settings.accounts'
     });
 
+    Menus.addSubMenuItem('account', 'settings', {
+      title: 'Manage Referrals',
+      state: 'settings.referrals'
+    });
+
   }
 
 })();

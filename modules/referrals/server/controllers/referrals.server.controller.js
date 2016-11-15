@@ -93,13 +93,13 @@ exports.list = function (req, res) {
   * Referrals by user
   */
 exports.referralsByUser = function (req, res) {
-
-  Referral.find({ user_1: req.user }).populate('user', 'displayName').exec(function (err, referrals) {
+  Referral.find({ user_1: req.profile._id }).populate('user', 'displayName').exec(function (err, referrals) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log('number of referrals: ', referrals.length);
       res.json(referrals);
     }
   });

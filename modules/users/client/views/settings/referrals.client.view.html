@@ -3,7 +3,7 @@
     <h1>Referrals</h1>
   </div>
   <div ng-repeat="referral in referrals">
-    <a ng-href="{{ referral.url }}">{{ referral.url }}</a>
+    <a ng-href="{{ linkify(referral._id) }}">{{ linkify(referral._id) }}</a>
     <p ng-bind="referral.created"></p>
   </div>
 

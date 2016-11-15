@@ -5,33 +5,39 @@
     .module('users')
     .controller('ReferralsController', ReferralsController);
 
-  ReferralsController.$inject = ['$http', '$scope'];
+  ReferralsController.$inject = ['$http', '$scope', 'ReferralsService'];
 
-  function ReferralsController($http, $scope) {
+  function ReferralsController($http, $scope, ReferralsService) {
     var vm = this;
     $scope.referrals = [];
 
     // This needs to be changed depending on the hosting environment
-    var domain = "http://localhost:3000";
-    var hyperlink = domain + "/authentication/signup-ref/";
-
+    var domain = 'http://localhost:3000';
+    var hyperlink = domain + '/authentication/signup-ref/';
+    console.log($scope.user);
     $scope.generateReferral = function() {
-      console.log('oh hai lonk i make');
       $http.post('api/referrals').then(function(response) {
-        console.log(response);
         $scope.referrals.push(response.data);
         generateLink(response.data);
       });
     };
-
     function generateLink(referral) {
       referral.url = hyperlink + referral._id;
     }
 
-    function getReferrals() {
-      
+    function getReferrals(user) {
+      $scope.referrals = ReferralsService.query({ userId : user._id });
     }
+    function getUserThenReferrals() {
+      $http.get('api/users/me').then(function(response) {
+        getReferrals(response.data);
+      });
+    }
+    getUserThenReferrals();
 
+    $scope.linkify = function(referralID) {
+      return hyperlink + referralID;
+    };
 
   }
 

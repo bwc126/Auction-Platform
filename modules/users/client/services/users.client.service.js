@@ -32,7 +32,7 @@ angular
 ReferralsService.$inject = ['$resource'];
 
 function ReferralsService($resource) {
-  return $resource('api/referrals/byUser/:userId', {
+  return $resource('api/user-referrals/:userId', {
     userId: '@_id'
   }, {
     update: {

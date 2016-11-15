@@ -20,7 +20,7 @@ module.exports = function (app) {
     .put(referrals.update)
     .delete(referrals.delete);
 
-  app.route('api/referrals/byUser/:userId').all(referralsPolicy.isAllowed)
+  app.route('/api/user-referrals/:userId').all(referralsPolicy.isAllowed)
     .get(referrals.referralsByUser);
 
   // Finish by binding the referral middleware

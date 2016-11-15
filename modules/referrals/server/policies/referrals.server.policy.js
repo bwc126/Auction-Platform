@@ -23,6 +23,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/referrals/:referralId/picture',
       permissions: '*'
+    }, {
+      resources: '/api/user-referrals/:userId',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -34,6 +37,9 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/referrals/:referralId/picture',
+      permissions: '*'
+    }, {
+      resources: '/api/user-referrals/:userId',
       permissions: '*'
     }]
   }, {
