@@ -27,13 +27,26 @@ function UserBidsService($resource) {
 
 angular
   .module('users')
-  .factory('ReferralsService', ReferralsService);
+  .factory('ReferralsService', ReferralsService)
+  .factory('ReferralSignupService', ReferralSignupService);
 
 ReferralsService.$inject = ['$resource'];
 
 function ReferralsService($resource) {
   return $resource('api/user-referrals/:userId', {
     userId: '@_id'
+  }, {
+    update: {
+      method: 'PUT'
+    }
+  });
+}
+
+ReferralSignupService.$inject = ['$resource'];
+
+function ReferralSignupService($resource) {
+  return $resource('/api/referrals/:referralId', {
+    referralId: '@_id'
   }, {
     update: {
       method: 'PUT'

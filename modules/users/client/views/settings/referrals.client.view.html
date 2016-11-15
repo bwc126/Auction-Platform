@@ -4,6 +4,9 @@
   </div>
   <div ng-repeat="referral in referrals">
     <a ng-href="{{ linkify(referral._id) }}">{{ linkify(referral._id) }}</a>
+    <p ng-bind="referral.user_1"></p>
+    <p ng-bind="referral.user_2"></p>
+    <p ng-if="referral.__v">Validated!</p>
     <p ng-bind="referral.created"></p>
   </div>
 

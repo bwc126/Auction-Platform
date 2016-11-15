@@ -79,6 +79,7 @@
       .state('authentication.signupreferral', {
         url: '/signup-ref/:referralId',
         templateUrl: 'modules/users/client/views/authentication/signup-ref.client.view.html',
+        controller: 'AuthenticationReferralController',
         resolve: {
           referralResolve: getReferral
         },
@@ -133,11 +134,10 @@
       });
   }
 
-  // TODO: Implement getReferral after referral module scaffolding
-  getReferral.$inject = ['$stateParams', 'ReferralsService'];
+  getReferral.$inject = ['$stateParams', 'ReferralSignupService'];
 
-  function getReferral($stateParams, ReferralsService) {
-    return ReferralsService.get({
+  function getReferral($stateParams, ReferralSignupService) {
+    return ReferralSignupService.get({
       referralId: $stateParams.referralId
     }).$promise;
   }

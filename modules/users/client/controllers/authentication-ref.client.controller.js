@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication', 'referralResolve', 'PasswordValidator',
+angular.module('users').controller('AuthenticationReferralController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication', 'referralResolve', 'PasswordValidator',
   function ($scope, $state, $http, $location, $window, Authentication, referral, PasswordValidator) {
     $scope.authentication = Authentication;
     $scope.popoverMsg = PasswordValidator.getPopoverMsg();
@@ -24,8 +24,13 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 
       $http.post('/api/auth/signup', $scope.credentials).success(function (response) {
         // If successful we assign the response to the global user model
+        console.log('successful signup, user: ',response);
         $scope.authentication.user = response;
-
+        // Add user_2 to the referral and post it.
+        referral.user_2 = response._id;
+        $http.put('/api/referrals/'+referral._id, { user_2 : response._id }).then(function(response) {
+          console.log(response);
+        });
         // And redirect to the previous or home page
         $state.go($state.previous.state.name || 'home', $state.previous.params);
       }).error(function (response) {

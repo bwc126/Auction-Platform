@@ -46,9 +46,8 @@ exports.read = function (req, res) {
  */
 exports.update = function (req, res) {
   var referral = req.referral;
-
-  referral.user_2 = req.user;
-
+  referral.user_2 = req.body.user_2;
+  console.log(req.body.user_2, referral);
   referral.save(function (err) {
     if (err) {
       return res.status(400).send({
