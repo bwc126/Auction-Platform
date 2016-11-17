@@ -56,6 +56,13 @@
           pageTitle: 'Settings picture'
         }
       })
+      .state('settings.payments', {
+        url: '/payments',
+        templateUrl: 'modules/users/client/views/settings/payments.client.view.html',
+        data: {
+          pageTitle: 'Settings payments'
+        }
+      })
       .state('settings.referrals', {
         url: '/referrals',
         templateUrl: 'modules/users/client/views/settings/referrals.client.view.html',
