@@ -1,10 +1,7 @@
-<section ng-controller="ReferralsController">
+<section ng-controller="PaymentsController">
   <div class="page-header">
-    <h1>Referrals</h1>
+    <h1>Payments</h1>
   </div>
-  <div ng-repeat="payment in payments">
-
-  </div>
-
-  <button ng-click="generateReferral()">Generate Referral Link</button>
+  <button ng-click="authorizePayment()">Pay The Man</button>
+  <div ng-bind="vm.response"></div>
 </section>

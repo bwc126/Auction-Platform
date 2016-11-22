@@ -9,8 +9,11 @@
 
   function PaymentsController($http, $scope, PaymentAuthService, PaymentExecutionService) {
     var vm = this;
-    $scope.payments = [];
 
+    $scope.authorizePayment = function() {
+      vm.response = PaymentAuthService;
+      console.log("Should be doing something", PaymentAuthService);
+    };
     // var domain = 'http://localhost:3000';
     // var hyperlink = domain + '/authentication/signup-ref/';
     // console.log($scope.user);

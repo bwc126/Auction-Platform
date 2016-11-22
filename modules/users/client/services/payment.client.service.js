@@ -1,4 +1,4 @@
-
+// Change the below to be inline with https://developer.paypal.com/docs/integration/direct/capture-payment/ which means we need to use the token we got from "making your first call"
 (function () {
   'use strict';
   var settings = {
@@ -8,22 +8,20 @@
     'method': 'POST',
     'headers': {
       'content-type': 'application/x-www-form-urlencoded',
-      'authorization': 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM=',
+      'authorization': 'Bearer A101.noQoGKPNvV1qlNzXRWAKiFnFRKuSPMH3Vp7sF9E36msbIBsQylzE4oY4vXcmVZsX.F0Q-CgoTDPvTxUvd3POTSerjqz4',
       'cache-control': 'no-cache',
       'postman-token': 'f1f0655b-2226-f81b-0cf5-7379f6a94f1e'
     },
-    'data': {
-      'grant_type': 'client_credentials'
-    }
+    'data': {}
   };
 
   angular
-    .module('users.services')
+    .module('users')
     .factory('PaymentAuthService', PaymentAuthService)
     .factory('PaymentExecutionService', PaymentExecutionService);
 
   PaymentAuthService.$inject = ['$http'];
-
+  // PaymentAuthService is much like other services, except it's handled with $http methods instead of $resource methods. Likewise for PaymentExecutionService.
   function PaymentAuthService($http, amount) {
     settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
     settings.data.intent = 'order';
