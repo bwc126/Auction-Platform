@@ -50,6 +50,11 @@
       state: 'settings.referrals'
     });
 
+    Menus.addSubMenuItem('account', 'settings', {
+      title: 'Manage Payments',
+      state: 'settings.payments'
+    });
+
   }
 
 })();

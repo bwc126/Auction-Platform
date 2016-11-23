@@ -2,15 +2,10 @@
 (function () {
   'use strict';
   var settings = {
-    'async': true,
-    'crossDomain': true,
-    'url': 'https://api.sandbox.paypal.com/v1/oauth2/token',
     'method': 'POST',
     'headers': {
-      'content-type': 'application/x-www-form-urlencoded',
-      'authorization': 'Bearer A101.noQoGKPNvV1qlNzXRWAKiFnFRKuSPMH3Vp7sF9E36msbIBsQylzE4oY4vXcmVZsX.F0Q-CgoTDPvTxUvd3POTSerjqz4',
-      'cache-control': 'no-cache',
-      'postman-token': 'f1f0655b-2226-f81b-0cf5-7379f6a94f1e'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer A101.oTWhdRNsro5UjBtqm7j4W70m0S9zdHAHRQN65F49hlHjAY0PExrsCZQPai7cD8Z5.3k-AP-P-f14adjSjuQb6fPp-PhW',
     },
     'data': {}
   };
@@ -22,34 +17,34 @@
 
   PaymentAuthService.$inject = ['$http'];
   // PaymentAuthService is much like other services, except it's handled with $http methods instead of $resource methods. Likewise for PaymentExecutionService.
-  function PaymentAuthService($http, amount) {
+  function PaymentAuthService($http) {
     settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
-    settings.data.intent = 'order';
+    settings.data.intent = 'authorize';
     settings.data.payer = {
       'payment_method' : 'paypal'
     };
     settings.data.transactions = [
       {
         'amount' : {
-          'total' : amount,
+          'total' : '1.00',
           'currency' : 'USD',
           'details' : {
-            'subtotal' : amount
+            'subtotal' : '1.00'
           }
         },
-        'description' : 'This is to authorize an amount of ' + amount,
+        'description' : 'This is to authorize an amount of $1.00',
       }];
-    return $http(settings).then(function(response) {
-      console.log(response);
-    });
+    settings.data.redirect_urls = {
+      'return_url': 'http://www.google.com',
+      'cancel_url': 'http://www.hawaii.com'
+    };
+    return $http(settings);
   }
 
   PaymentExecutionService.$inject = ['$http'];
 
   function PaymentExecutionService($http) {
-    return $http(settings).then(function(response) {
-      console.log(response);
-    });
+    return $http(settings);
   }
 
 })();

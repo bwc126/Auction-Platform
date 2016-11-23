@@ -11,7 +11,12 @@
     var vm = this;
 
     $scope.authorizePayment = function() {
-      vm.response = PaymentAuthService;
+      PaymentAuthService.then(function(response) {
+        console.log(response);
+        $scope.created = response.data.create_time;
+        var transactions = response.data.transactions[0];
+        $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
+      });
       console.log("Should be doing something", PaymentAuthService);
     };
     // var domain = 'http://localhost:3000';
