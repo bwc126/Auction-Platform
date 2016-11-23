@@ -9,15 +9,17 @@
 
   function PaymentsController($http, $scope, PaymentAuthService, PaymentExecutionService) {
     var vm = this;
-
+    console.log($scope.user);
     $scope.authorizePayment = function() {
       PaymentAuthService.then(function(response) {
         console.log(response);
         $scope.created = response.data.create_time;
         var transactions = response.data.transactions[0];
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
+        $scope.user.currentPaymentID = response.data.id;
+        $scope.user.$save();
       });
-      console.log("Should be doing something", PaymentAuthService);
+      console.log('Should be doing something', PaymentAuthService);
     };
     // var domain = 'http://localhost:3000';
     // var hyperlink = domain + '/authentication/signup-ref/';

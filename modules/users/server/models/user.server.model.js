@@ -105,6 +105,9 @@ var UserSchema = new Schema({
   authorizedAmount: {
     type: Number,
     default: 0
+  },
+  currentPaymentID: {
+    type: String
   }
 });
 
