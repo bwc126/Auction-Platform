@@ -5,10 +5,11 @@
     .module('users')
     .controller('PaymentsController', PaymentsController);
 
-  PaymentsController.$inject = ['$http', '$scope', 'PaymentAuthService', 'PaymentExecutionService'];
+  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentExecutionService', 'Authentication'];
 
-  function PaymentsController($http, $scope, PaymentAuthService, PaymentExecutionService) {
+  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentExecutionService, Authentication) {
     var vm = this;
+    $scope.user = Authentication.user;
     console.log($scope.user);
     $scope.authorizePayment = function() {
       PaymentAuthService.then(function(response) {
@@ -17,7 +18,15 @@
         var transactions = response.data.transactions[0];
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
         $scope.user.currentPaymentID = response.data.id;
-        $scope.user.$save();
+        var user = new Users($scope.user);
+        user.$update(function (response) {
+          $scope.$broadcast('show-errors-reset', 'userForm');
+          $scope.success = true;
+          Authentication.user = response;
+          console.log(Authentication.user);
+        }, function (response) {
+          $scope.error = response.data.message;
+        });
       });
       console.log('Should be doing something', PaymentAuthService);
     };

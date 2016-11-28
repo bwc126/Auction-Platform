@@ -3,6 +3,7 @@
     <h1>Payments</h1>
   </div>
   <button ng-if="!user.currentPaymentID" ng-click="authorizePayment()">Pay The Man</button>
+  <div ng-bind="user.currentPaymentID"></div>
   <div ng-bind="created"></div>
   <div ng-bind="amount"></div>
 </section>
