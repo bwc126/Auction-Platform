@@ -13,7 +13,8 @@
   angular
     .module('users')
     .factory('PaymentAuthService', PaymentAuthService)
-    .factory('PaymentExecutionService', PaymentExecutionService);
+    .factory('PaymentExecutionService', PaymentExecutionService)
+    .factory('PaypalTokenService', PaypalTokenService);
 
   PaymentAuthService.$inject = ['$http'];
   // PaymentAuthService is much like other services, except it's handled with $http methods instead of $resource methods. Likewise for PaymentExecutionService.
@@ -44,6 +45,15 @@
   PaymentExecutionService.$inject = ['$http'];
 
   function PaymentExecutionService($http) {
+    return $http(settings);
+  }
+
+  // PaypalTokenService requests an access token from paypal. Eventually, this will be done using the user's auth info from their linked paypal account.
+  PaypalTokenService.$inject = ['$http'];
+
+  function PaypalTokenService($http) {
+    settings.url = '';
+    settings.intent =
     return $http(settings);
   }
 
