@@ -5,12 +5,18 @@
     .module('users')
     .controller('PaymentsController', PaymentsController);
 
-  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentExecutionService', 'Authentication'];
+  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentExecutionService', 'PaypalTokenService', 'Authentication'];
 
-  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentExecutionService, Authentication) {
+  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentExecutionService, PaypalTokenService, Authentication) {
     var vm = this;
     $scope.user = Authentication.user;
     console.log($scope.user);
+    $scope.generateToken = function() {
+      PaypalTokenService.then(function(response) {
+        console.log(response);
+        Authentication.paypal = response.access_token;
+      });
+    };
     $scope.authorizePayment = function() {
       PaymentAuthService.then(function(response) {
         console.log(response);
@@ -28,8 +34,8 @@
           $scope.error = response.data.message;
         });
       });
-      console.log('Should be doing something', PaymentAuthService);
     };
+    $scope.generateToken();
     // var domain = 'http://localhost:3000';
     // var hyperlink = domain + '/authentication/signup-ref/';
     // console.log($scope.user);

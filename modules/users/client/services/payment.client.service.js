@@ -50,10 +50,12 @@
 
   // PaypalTokenService requests an access token from paypal. Eventually, this will be done using the user's auth info from their linked paypal account.
   PaypalTokenService.$inject = ['$http'];
-
+  // TODO: Correct 'client credentials are missing' error. 
   function PaypalTokenService($http) {
-    settings.url = '';
-    settings.intent =
+    settings.url = 'https://api.sandbox.paypal.com/v1/oauth2/token';
+    settings.headers.Authorization = 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM=';
+    settings.headers['cache-control'] = 'no-cache';
+    settings.data.grant_type = 'client_credentials';
     return $http(settings);
   }
 
