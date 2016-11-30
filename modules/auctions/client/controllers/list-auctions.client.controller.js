@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   var BID_INCREMENT = 1.01;
+  var THRESHOLD = 10.00;
   angular
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
@@ -12,10 +13,11 @@
     var updatePeriod = 900;
     vm.auctions = AuctionsService.query();
     vm.placeBid = placeBid;
+    var user = Authentication.user;
     $scope.userName = Authentication.user.displayName;
     console.log(Authentication);
+    // Make a post request to place the bid.
     function placeBid(auction) {
-
       console.log(auction.amount);
       $http({
         method : 'POST',
@@ -23,8 +25,15 @@
       }).then(function(response) {
         console.log(response);
       });
-
+      // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
+      if user.authorizedAmount < (user.bidTotal + THRESHOLD) {
+        // Request new authorization amount. 
+      }
+      else {
+        // Place the bid.
+      }
     }
+    // Get the current leading bid
     function getCurrent(auction) {
       $http.get('/api/bids/'+auction._id+'/leading').then(function(response) {
         auction.amount = response.data.amount.toFixed(2);
@@ -33,6 +42,7 @@
       });
 
     }
+    // For each auction, get the current leading bid.
     var bidUpdate = window.setInterval(function() {
       vm.auctions.forEach(function(auction) {
         getCurrent(auction);
