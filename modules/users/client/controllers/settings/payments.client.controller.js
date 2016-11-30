@@ -10,16 +10,18 @@
   function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentExecutionService, PaypalTokenService, Authentication) {
     var vm = this;
     $scope.user = Authentication.user;
-    console.log($scope.user);
     $scope.generateToken = function() {
-      PaypalTokenService.then(function(response) {
+      var request = new PaypalTokenService();
+      request.then(function(response) {
         console.log(response);
-        Authentication.paypal = response.access_token;
+        Authentication.paypal = response.data.token_type + ' ' + response.data.access_token;
       });
     };
     $scope.authorizePayment = function() {
-      PaymentAuthService.then(function(response) {
-        console.log(response);
+      var authRequest = new PaymentAuthService({ 'headers': {'authorization': Authentication.paypal} });
+      console.log(authRequest);
+      authRequest.then(function(response) {
+        console.log(authRequest, response);
         $scope.created = response.data.create_time;
         var transactions = response.data.transactions[0];
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
