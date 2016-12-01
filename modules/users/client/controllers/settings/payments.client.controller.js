@@ -18,7 +18,7 @@
       });
     };
     $scope.authorizePayment = function() {
-      var authRequest = new PaymentAuthService({ 'headers': {'authorization': Authentication.paypal} });
+      var authRequest = new PaymentAuthService({ 'headers': { 'authorization': Authentication.paypal } });
       console.log(authRequest);
       authRequest.then(function(response) {
         console.log(authRequest, response);

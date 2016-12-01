@@ -46,3 +46,7 @@ exports.updateUserTotal = function (req, res) {
     }
   });
 };
+
+exports.authorizePayment = function (req, res) {
+  console.log('authorizing payment with paypal . . . ' + req.body.amount);
+};
