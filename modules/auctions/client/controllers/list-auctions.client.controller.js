@@ -6,25 +6,31 @@
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
 
-  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', '$http'];
+  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', '$http'];
 
-  function AuctionsListController($scope, Authentication, AuctionsService, $http) {
+  function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, $http) {
     var vm = this;
+    vm.authentication = Authentication;
+    var user = vm.authentication.user;
+    $scope.userName = user.displayName;
+
     var updatePeriod = 900;
     vm.auctions = AuctionsService.query();
     vm.placeBid = placeBid;
-    var user = Authentication.user;
-    $scope.userName = Authentication.user.displayName;
     console.log(Authentication);
     var newAuthAmt;
+    var paymentAuth;
     // Make a post request to place the bid.
     function placeBid(auction) {
+      console.log(user.bidTotal);
       console.log(auction.amount);
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
       if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {
         // Request new authorization amount.
         newAuthAmt = user.authorizedAmount + (THRESHOLD * 2);
-        $http('api/users/AuthorizePayment').post({ 'amount' : newAuthAmt }).then(function(response) {
+        paymentAuth = new PaymentAuthService();
+
+        paymentAuth.then(function(response) {
           console.log(response);
         });
       }
