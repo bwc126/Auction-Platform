@@ -10,6 +10,7 @@
 
   function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, $http) {
     var vm = this;
+    $scope.authentication = Authentication;
     vm.authentication = Authentication;
     var user = vm.authentication.user;
     $scope.userName = user.displayName;
@@ -27,8 +28,8 @@
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
       if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {
         // Request new authorization amount.
-        newAuthAmt = user.authorizedAmount + (THRESHOLD * 2);
-        paymentAuth = new PaymentAuthService();
+        newAuthAmt = (user.authorizedAmount + (THRESHOLD * 2)).toFixed(2);
+        paymentAuth = new PaymentAuthService(newAuthAmt);
 
         paymentAuth.then(function(response) {
           console.log(response);

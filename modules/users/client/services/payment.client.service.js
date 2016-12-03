@@ -19,6 +19,9 @@
   PaymentAuthService.$inject = ['$http'];
   // PaymentAuthService is much like other services, except it's handled with $http methods instead of $resource methods. Likewise for PaymentExecutionService.
   function PaymentAuthService($http) {
+    var amount = this.arguments ? this.arguments : 1.00;
+    console.log(amount);
+
     var settings = {
       'method': 'POST',
       'headers': {
@@ -34,13 +37,13 @@
     settings.data.transactions = [
       {
         'amount' : {
-          'total' : '1.00',
+          'total' : amount,
           'currency' : 'USD',
           'details' : {
-            'subtotal' : '1.00'
+            'subtotal' : amount
           }
         },
-        'description' : 'This is to authorize an amount of $1.00',
+        'description' : 'This is to authorize an amount of '+amount,
       }];
     settings.data.redirect_urls = {
       'return_url': 'http://www.google.com',
