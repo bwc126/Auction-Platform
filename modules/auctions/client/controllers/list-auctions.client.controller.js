@@ -1,7 +1,6 @@
 (function () {
   'use strict';
   var BID_INCREMENT = 1.01;
-  var THRESHOLD = 10.00;
   angular
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
@@ -9,10 +8,10 @@
   AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', '$http'];
 
   function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, $http) {
+    var THRESHOLD = 10.00;
     var vm = this;
     $scope.authentication = Authentication;
-    vm.authentication = Authentication;
-    var user = vm.authentication.user;
+    var user = Authentication.user;
     $scope.userName = user.displayName;
 
     var updatePeriod = 900;
@@ -28,9 +27,26 @@
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
       if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {
         // Request new authorization amount.
-        newAuthAmt = (user.authorizedAmount + (THRESHOLD * 2)).toFixed(2);
-        paymentAuth = new PaymentAuthService(newAuthAmt);
-
+        newAuthAmt = (user.authorizedAmount + (THRESHOLD)).toFixed(2);
+        console.log(newAuthAmt);
+        paymentAuth = new PaymentAuthService({ 'data' : {'transactions': [
+          {
+            'amount' : {
+              'total' : newAuthAmt,
+              'currency' : 'USD',
+              'details' : {
+                'subtotal' : newAuthAmt
+              }
+            },
+            'description' : 'This is to authorize an amount of '+newAuthAmt,
+          }],
+          'intent': 'authorize',
+          'payer': {'payment_method' : 'paypal'},
+          'redirect_urls': {
+            'return_url': 'http://www.google.com',
+            'cancel_url': 'http://www.hawaii.com'
+          }}, 'headers' : {'Authorization': Authentication.paypal, 'Content-Type': 'application/json'} });
+        console.log(paymentAuth);
         paymentAuth.then(function(response) {
           console.log(response);
         });

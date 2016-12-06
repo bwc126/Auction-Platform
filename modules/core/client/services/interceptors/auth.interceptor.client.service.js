@@ -3,7 +3,9 @@
 angular.module('core').factory('authInterceptor', ['$q', '$injector', 'Authentication',
   function ($q, $injector, Authentication) {
     return {
+      // Looks like this is what happens any time a controller using the authentication variable gets an error. Repeated sign-ins usually involve this.
       responseError: function(rejection) {
+        console.log(rejection);
         if (!rejection.config.ignoreAuthModule) {
           switch (rejection.status) {
             case 401:

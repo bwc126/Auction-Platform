@@ -6,7 +6,7 @@ var validator = require('validator');
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {
-
+  // This is where the window and Authentication User object gets its values! Authnetication.user comes from here! Window.user ultimately comes from here!
   var safeUserObject = null;
   if (req.user) {
     safeUserObject = {
@@ -19,7 +19,11 @@ exports.renderIndex = function (req, res) {
       email: validator.escape(req.user.email),
       lastName: validator.escape(req.user.lastName),
       firstName: validator.escape(req.user.firstName),
-      additionalProvidersData: req.user.additionalProvidersData
+      additionalProvidersData: req.user.additionalProvidersData,
+      bidTotal: req.user.bidTotal,
+      authorizedAmount: req.user.authorizedAmount,
+      currentPaymentID: req.user.currentPaymentID
+
     };
   }
 

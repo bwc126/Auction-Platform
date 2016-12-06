@@ -7,7 +7,8 @@
       'Content-Type': 'application/json',
       'Authorization': 'Bearer A101.u9rXOqFGACpFpDS7a367BjZVDErXI48gWeeH8inUXusD205PYbrVO7iCui1TLU-i.czhh_Sm8Yp92tg6zHeoIA61fZrK',
     },
-    'data': {}
+    'data': {},
+    'ignoreAuthModule': 'true'
   };
 
   angular
@@ -19,8 +20,7 @@
   PaymentAuthService.$inject = ['$http'];
   // PaymentAuthService is much like other services, except it's handled with $http methods instead of $resource methods. Likewise for PaymentExecutionService.
   function PaymentAuthService($http) {
-    var amount = this.arguments ? this.arguments : 1.00;
-    console.log(amount);
+    var amount = 1.00;
 
     var settings = {
       'method': 'POST',
@@ -34,21 +34,22 @@
     settings.data.payer = {
       'payment_method' : 'paypal'
     };
-    settings.data.transactions = [
-      {
-        'amount' : {
-          'total' : amount,
-          'currency' : 'USD',
-          'details' : {
-            'subtotal' : amount
-          }
-        },
-        'description' : 'This is to authorize an amount of '+amount,
-      }];
+    // settings.data.transactions = [
+    //   {
+    //     'amount' : {
+    //       'total' : amount,
+    //       'currency' : 'USD',
+    //       'details' : {
+    //         'subtotal' : amount
+    //       }
+    //     },
+    //     'description' : 'This is to authorize an amount of '+amount,
+    //   }];
     settings.data.redirect_urls = {
       'return_url': 'http://www.google.com',
       'cancel_url': 'http://www.hawaii.com'
     };
+    settings.ignoreAuthModule = true;
     var service = function(args) {
       angular.extend(settings, args);
       return $http(settings);
@@ -81,8 +82,8 @@
         'cache-control': 'no-cache',
         'postman-token': 'bf5aa707-66c2-92f0-3c0e-af24e992b841'
       },
-      'data': 'grant_type=client_credentials'
-
+      'data': 'grant_type=client_credentials',
+      'ignoreAuthModule': 'true'
     };
     var service = function(args) {
       angular.extend(settings, args);
