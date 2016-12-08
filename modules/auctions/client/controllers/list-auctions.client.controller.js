@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
 
-  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', '$http'];
+  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', 'PaypalTokenService', '$http'];
 
-  function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, $http) {
+  function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, PaypalTokenService, $http) {
     var THRESHOLD = 10.00;
     var vm = this;
     $scope.authentication = Authentication;
@@ -20,6 +20,16 @@
     console.log(Authentication);
     var newAuthAmt;
     var paymentAuth;
+
+    if (!Authentication.paypal) {
+      var paypalToken = new PaypalTokenService();
+      paypalToken.then(function(response) {
+        console.log(response);
+        Authentication.paypal = response.data.token_type + ' ' + response.data.access_token;
+      });
+    }
+
+
     // Make a post request to place the bid.
     function placeBid(auction) {
       console.log(user.bidTotal);
@@ -29,7 +39,7 @@
         // Request new authorization amount.
         newAuthAmt = (user.authorizedAmount + (THRESHOLD)).toFixed(2);
         console.log(newAuthAmt);
-        paymentAuth = new PaymentAuthService({ 'data' : {'transactions': [
+        paymentAuth = new PaymentAuthService({ 'data' : { 'transactions': [
           {
             'amount' : {
               'total' : newAuthAmt,
@@ -41,14 +51,15 @@
             'description' : 'This is to authorize an amount of '+newAuthAmt,
           }],
           'intent': 'authorize',
-          'payer': {'payment_method' : 'paypal'},
+          'payer': { 'payment_method' : 'paypal' },
           'redirect_urls': {
             'return_url': 'http://www.google.com',
             'cancel_url': 'http://www.hawaii.com'
-          }}, 'headers' : {'Authorization': Authentication.paypal, 'Content-Type': 'application/json'} });
+          } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
         console.log(paymentAuth);
         paymentAuth.then(function(response) {
           console.log(response);
+          // TODO: Save the user's new auth amount, and place the bid if we've authorized enough.
         });
       }
       else {
