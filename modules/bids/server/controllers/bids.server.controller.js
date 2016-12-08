@@ -196,7 +196,7 @@ exports.leadingBids = function (req, res, next) {
   var bids = [];
   var done = false;
   var b = 0;
-  function finish() {
+  function finish(bids) {
     console.log(bids);
     req.bids = bids;
     next();
@@ -212,9 +212,9 @@ exports.leadingBids = function (req, res, next) {
         });
       } else if (req.user._id.equals(bid.user._id)) {
         bids.push(bid);
-        if (b === numAuctions - 1) {
+        if (b === numAuctions) {
           console.log('CALLING FINISH');
-          finish();
+          finish(bids);
         }
       }
     });
