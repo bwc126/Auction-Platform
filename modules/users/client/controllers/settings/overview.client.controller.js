@@ -32,7 +32,7 @@
     }
     function getUserTotal() {
       console.log('inside getUserTotal');
-      $http.get('api/bids/leading').then(function(response) {
+      $http.get('api/bids/leading', { 'user': vm.user }).then(function(response) {
         console.log(response);
       });
     }
