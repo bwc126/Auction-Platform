@@ -20,7 +20,7 @@ var _ = require('lodash'),
 exports.updateUserTotal = function (req, res) {
   var user = req.user;
   var total = 0;
-  console.log('UPDATE USER TOTAL: ',req.bids);
+  console.log('UPDATE USER TOTAL: ',req.bids, req.user);
   var numBids = req.bids.length;
 
   for (var i = 0; i < numBids; i++) {

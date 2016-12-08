@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsListController', AuctionsListController);
 
-  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', 'PaypalTokenService', '$http'];
+  AuctionsListController.$inject = ['$scope', 'Authentication', 'AuctionsService', 'PaymentAuthService', 'PaypalTokenService', 'Users', '$http'];
 
-  function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, PaypalTokenService, $http) {
+  function AuctionsListController($scope, Authentication, AuctionsService, PaymentAuthService, PaypalTokenService, Users, $http) {
     var THRESHOLD = 10.00;
     var vm = this;
     $scope.authentication = Authentication;
@@ -60,6 +60,8 @@
         paymentAuth.then(function(response) {
           console.log(response);
           // TODO: Save the user's new auth amount, and place the bid if we've authorized enough.
+          user.authorizedAmount = Number(response.data.transactions[0].amount.total);
+          updateUserProfile(user);
         });
       }
       else {
@@ -80,6 +82,21 @@
         auction.currentUser = $scope.userName;
       });
 
+    }
+
+    // Update a user profile
+    function updateUserProfile(user) {
+      $scope.success = $scope.error = null;
+      console.log('inside updateUserProfile', user);
+      user = new Users(user);
+
+      user.$update(function (response) {
+        $scope.success = true;
+        Authentication.user = response;
+        console.log('response on saving user: ', response);
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
     }
     // For each auction, get the current leading bid.
     var bidUpdate = window.setInterval(function() {
