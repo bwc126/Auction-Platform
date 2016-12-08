@@ -35,6 +35,7 @@
       console.log(user.bidTotal);
       console.log(auction.amount);
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
+      // TODO: Updating user authorization total should eventually be moved to server-side as middleware. !!! IMPORTANT !!! 
       if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {
         // Request new authorization amount.
         newAuthAmt = (user.authorizedAmount + (THRESHOLD)).toFixed(2);
@@ -85,6 +86,7 @@
     }
 
     // Update a user profile
+    // Updating authorization amount should eventually be handled server-side.
     function updateUserProfile(user) {
       $scope.success = $scope.error = null;
       console.log('inside updateUserProfile', user);
