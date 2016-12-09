@@ -36,6 +36,9 @@ var AuctionSchema = new Schema({
   amount: {
     type: Number,
     default: 1.00
+  },
+  weekActive: {
+    type: Date
   }
 });
 
