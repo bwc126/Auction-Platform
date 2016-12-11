@@ -14,7 +14,7 @@
   angular
     .module('users')
     .factory('PaymentAuthService', PaymentAuthService)
-    .factory('PaymentExecutionService', PaymentExecutionService)
+    .factory('PaymentCaptureService', PaymentCaptureService)
     .factory('PaypalTokenService', PaypalTokenService);
 
   PaymentAuthService.$inject = ['$http'];
@@ -57,10 +57,23 @@
     return service;
   }
 
-  PaymentExecutionService.$inject = ['$http'];
+  PaymentCaptureService.$inject = ['$http'];
 
-  function PaymentExecutionService($http) {
-    return $http(settings);
+  function PaymentCaptureService($http) {
+    var settings = {
+      'method': 'POST',
+      'headers': {
+        'Content-Type': 'application/json',
+      },
+      'data': {}
+    };
+    settings.ignoreAuthModule = true;
+    var service = function(id, args) {
+      settings.url = 'https://api.sandbox.paypal.com/v1/payments/authorization'+id+'/capture';
+      angular.extend(settings, args);
+      return $http(settings);
+    };
+    return service;
   }
 
   // PaypalTokenService requests an access token from paypal. Eventually, this will be done using the user's auth info from their linked paypal account.

@@ -5,9 +5,9 @@
     .module('users')
     .controller('PaymentsController', PaymentsController);
 
-  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentExecutionService', 'PaypalTokenService', 'Authentication'];
+  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentCaptureService', 'PaypalTokenService', 'Authentication'];
 
-  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentExecutionService, PaypalTokenService, Authentication) {
+  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentCaptureService, PaypalTokenService, Authentication) {
     var vm = this;
     $scope.user = Authentication.user;
     $scope.generateToken = function() {
@@ -37,6 +37,14 @@
         });
       });
     };
+
+    $scope.capturePayment = function() {
+      console.log('capture payment...');
+      var capture = new PaymentCaptureService(user.currentPaymentID);
+      capture.then(function(response) {
+        console.log('response from payment capture request:', response);
+      })
+    }
     $scope.generateToken();
     // var domain = 'http://localhost:3000';
     // var hyperlink = domain + '/authentication/signup-ref/';
