@@ -6,5 +6,5 @@
   <div ng-bind="user.currentPaymentID"></div>
   <div ng-bind="created"></div>
   <div ng-bind="amount"></div>
-  <button ng-if="user.currentPaymentID" ng-click="capturePayment()">Pay ${{ user.bidTotal.toFixed(2) }}</button>
+  <button ng-if="user.currentPaymentID" ng-click="capturePayment(user.currentPaymentID)">Pay ${{ user.bidTotal.toFixed(2) }}</button>
 </section>

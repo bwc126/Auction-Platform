@@ -29,7 +29,6 @@
       },
       'data': {}
     };
-    settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
     settings.data.intent = 'authorize';
     settings.data.payer = {
       'payment_method' : 'paypal'
@@ -62,14 +61,11 @@
   function PaymentCaptureService($http) {
     var settings = {
       'method': 'POST',
-      'headers': {
-        'Content-Type': 'application/json',
-      },
       'data': {}
     };
     settings.ignoreAuthModule = true;
-    var service = function(id, args) {
-      settings.url = 'https://api.sandbox.paypal.com/v1/payments/authorization'+id+'/capture';
+    var service = function(args) {
+      // settings.url = 'https://api.sandbox.paypal.com/v1/payments/authorization'+id+'/capture';
       angular.extend(settings, args);
       return $http(settings);
     };

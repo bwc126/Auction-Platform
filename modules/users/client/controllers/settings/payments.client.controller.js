@@ -10,6 +10,7 @@
   function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentCaptureService, PaypalTokenService, Authentication) {
     var vm = this;
     $scope.user = Authentication.user;
+    var user = Authentication.user;
     $scope.generateToken = function() {
       var request = new PaypalTokenService();
       request.then(function(response) {
@@ -38,13 +39,31 @@
       });
     };
 
-    $scope.capturePayment = function() {
-      console.log('capture payment...');
-      var capture = new PaymentCaptureService(user.currentPaymentID);
+    function capturePayment(paymentID) {
+      console.log(paymentID);
+      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/authorization/' + paymentID + '/capture';
+      // Content-Type gets me every time, it should be a single string like below!
+      var capture = new PaymentCaptureService({
+        'headers': {
+          'authorization': Authentication.paypal,
+          'Content-Type': 'application/json',
+        },
+        'url': reqURL,
+        'data': {
+          'amount': {
+            'currency': 'USD',
+            'total': user.bidTotal.toFixed(2)
+          }
+        }
+      });
+
+      console.log(capture);
+
       capture.then(function(response) {
         console.log('response from payment capture request:', response);
-      })
+      });
     }
+    $scope.capturePayment = capturePayment;
     $scope.generateToken();
     // var domain = 'http://localhost:3000';
     // var hyperlink = domain + '/authentication/signup-ref/';
