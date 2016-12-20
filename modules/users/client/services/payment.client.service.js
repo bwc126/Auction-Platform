@@ -24,15 +24,13 @@
 
     var settings = {
       'method': 'POST',
-      'headers': {
-        'Content-Type': 'application/json',
-      },
       'data': {}
     };
     settings.data.intent = 'authorize';
     settings.data.payer = {
       'payment_method' : 'paypal'
     };
+    settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
     // settings.data.transactions = [
     //   {
     //     'amount' : {

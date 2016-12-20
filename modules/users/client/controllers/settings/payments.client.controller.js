@@ -8,6 +8,7 @@
   PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentCaptureService', 'PaypalTokenService', 'Authentication'];
 
   function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentCaptureService, PaypalTokenService, Authentication) {
+    var THRESHOLD = 5.00;
     var vm = this;
     $scope.user = Authentication.user;
     var user = Authentication.user;
@@ -19,14 +20,33 @@
       });
     };
     $scope.authorizePayment = function() {
-      var authRequest = new PaymentAuthService({ 'headers': { 'authorization': Authentication.paypal } });
-      console.log(authRequest);
-      authRequest.then(function(response) {
-        console.log(authRequest, response);
+      var authAmt = (user.bidTotal + THRESHOLD).toFixed(2);
+      var paymentAuth = new PaymentAuthService({ 'data' : { 'transactions': [
+        {
+          'amount' : {
+            'total' : authAmt,
+            'currency' : 'USD',
+            'details' : {
+              'subtotal' : authAmt
+            }
+          },
+          'description' : 'This is to authorize an amount of '+ authAmt,
+        }],
+        'intent': 'authorize',
+        'payer': { 'payment_method' : 'paypal' },
+        'redirect_urls': {
+          'return_url': 'http://www.google.com',
+          'cancel_url': 'http://www.hawaii.com'
+        } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
+      console.log(paymentAuth);
+      paymentAuth.then(function(response) {
+        console.log(response);
         $scope.created = response.data.create_time;
+
         var transactions = response.data.transactions[0];
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
         $scope.user.currentPaymentID = response.data.id;
+
         var user = new Users($scope.user);
         user.$update(function (response) {
           $scope.$broadcast('show-errors-reset', 'userForm');
@@ -41,20 +61,20 @@
 
     function capturePayment(paymentID) {
       console.log(paymentID);
-      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/authorization/' + paymentID + '/capture';
-      // Content-Type gets me every time, it should be a single string like below!
+      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/authorization/' + paymentID;
+      //  + '/reauthorize';
       var capture = new PaymentCaptureService({
-        'headers': {
-          'authorization': Authentication.paypal,
-          'Content-Type': 'application/json',
-        },
+        // 'headers': {
+        //   'authorization': Authentication.paypal,
+        //   'Content-Type': 'application/json',
+        // },
         'url': reqURL,
-        'data': {
-          'amount': {
-            'currency': 'USD',
-            'total': user.bidTotal.toFixed(2)
-          }
-        }
+        // 'data': {
+        //   'amount': {
+        //     'currency': 'USD',
+        //     'total': user.bidTotal.toFixed(2)
+        //   }
+        // }
       });
 
       console.log(capture);
