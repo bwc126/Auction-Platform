@@ -4,6 +4,7 @@
   </div>
   <!-- <button ng-if="!user.currentPaymentID" ng-click="authorizePayment()">Pay The Man</button> -->
     <button ng-click="authorizePayment()">Pay The Man</button>
+    <a ng-href="{{ authLink }}" ng-if="authLink">Authorize Paypal Payment</a>
   <div ng-bind="user.currentPaymentID"></div>
   <div ng-bind="created"></div>
   <div ng-bind="amount"></div>

@@ -36,7 +36,7 @@
         'payer': { 'payment_method' : 'paypal' },
         'redirect_urls': {
           'return_url': 'http://localhost:3000/settings/payments',
-          'cancel_url': 'http://www.hawaii.com'
+          'cancel_url': 'http://localhost:3000/settings/payments'
         } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
       console.log(paymentAuth);
       paymentAuth.then(function(response) {
@@ -46,6 +46,7 @@
         var transactions = response.data.transactions[0];
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
         $scope.user.currentPaymentID = response.data.id;
+        $scope.authLink = response.data.links[1].href;
 
         var user = new Users($scope.user);
         user.$update(function (response) {
@@ -61,7 +62,7 @@
 
     function capturePayment(paymentID) {
       console.log(paymentID);
-      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/' + paymentID+'/execute';
+      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/' + paymentID;
       // + '/capture';
       var capture = new PaymentCaptureService({
         'headers': {
