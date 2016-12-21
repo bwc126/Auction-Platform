@@ -35,7 +35,7 @@
         'intent': 'authorize',
         'payer': { 'payment_method' : 'paypal' },
         'redirect_urls': {
-          'return_url': 'http://www.google.com',
+          'return_url': 'http://localhost:3000/settings/payments',
           'cancel_url': 'http://www.hawaii.com'
         } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
       console.log(paymentAuth);
@@ -61,21 +61,21 @@
 
     function capturePayment(paymentID) {
       console.log(paymentID);
-      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/authorization/' + paymentID;
-      //  + '/reauthorize';
+      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/' + paymentID+'/execute';
+      // + '/capture';
       var capture = new PaymentCaptureService({
-        // 'headers': {
-        //   'authorization': Authentication.paypal,
-        //   'Content-Type': 'application/json',
-        // },
-        'url': reqURL,
-        // 'data': {
-        //   'amount': {
-        //     'currency': 'USD',
-        //     'total': user.bidTotal.toFixed(2)
-        //   }
-        // }
-      });
+        'headers': {
+          'authorization': Authentication.paypal,
+          'Content-Type': 'application/json',
+        },
+        'transactions': {
+          'amount': {
+            'currency': 'USD',
+            'total': user.bidTotal.toFixed(2)
+          }
+        },
+        'payer': { 'payment_method' : 'paypal' },
+        'url': reqURL });
 
       console.log(capture);
 
