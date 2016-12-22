@@ -5,9 +5,9 @@
     .module('users')
     .controller('PaymentsController', PaymentsController);
 
-  PaymentsController.$inject = ['$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentCaptureService', 'PaypalTokenService', 'Authentication'];
+  PaymentsController.$inject = ['$location', '$http', '$scope', 'Users', 'PaymentAuthService', 'PaymentCaptureService', 'PaypalTokenService', 'Authentication'];
 
-  function PaymentsController($http, $scope, Users, PaymentAuthService, PaymentCaptureService, PaypalTokenService, Authentication) {
+  function PaymentsController($location, $http, $scope, Users, PaymentAuthService, PaymentCaptureService, PaypalTokenService, Authentication) {
     var THRESHOLD = 5.00;
     var vm = this;
     $scope.user = Authentication.user;
@@ -59,23 +59,27 @@
         });
       });
     };
-
+    // This is where we extract paypal's addendum to our URL containing the payerID
+    var payerQuery = $location.absUrl().split('&')[2];
+    var payerID = payerQuery.split('=')[1];
+    console.log(payerID);
     function capturePayment(paymentID) {
       console.log(paymentID);
-      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/' + paymentID;
-      // + '/capture';
+      var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/'+paymentID+'/execute';
       var capture = new PaymentCaptureService({
         'headers': {
           'authorization': Authentication.paypal,
           'Content-Type': 'application/json',
         },
-        'transactions': {
-          'amount': {
-            'currency': 'USD',
-            'total': user.bidTotal.toFixed(2)
-          }
+        'data' : {
+          'transactions': [{
+            'amount': {
+              'currency': 'USD',
+              'total': user.bidTotal.toFixed(2)
+            }
+          }],
+          'payer_id': payerID,
         },
-        'payer': { 'payment_method' : 'paypal' },
         'url': reqURL });
 
       console.log(capture);

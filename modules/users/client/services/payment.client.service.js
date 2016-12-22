@@ -59,7 +59,6 @@
   function PaymentCaptureService($http) {
     var settings = {
       'method': 'POST',
-      'data': {}
     };
     settings.ignoreAuthModule = true;
     var service = function(args) {
