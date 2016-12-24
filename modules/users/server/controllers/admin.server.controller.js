@@ -91,3 +91,20 @@ exports.userByID = function (req, res, next, id) {
     next();
   });
 };
+exports.listUsers = function (req, res, next) {
+  User.find({}, '-salt -password').sort('-created').populate('user', 'displayName').exec(function (err, users) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+
+    req.model = users;
+  });
+};
+// Entries middleware
+
+exports.drawWinners = function (req,res,next) {
+  // Each entry is assigned a number between one and the total entries, and a random number is generated to select a winning entry. This random number selection is repeated 3 times.
+
+};
