@@ -251,23 +251,35 @@ exports.bidByID = function (req, res, next, id) {
 exports.getBids = function (req, res, next) {
   var numUsers = req.model.length;
   var usr;
-  function assignEntries(err,bids) {
-      req.usr = usr;
+  var dict = {};
+  var b = 0;
+  function finish(dict) {
+    req.dict = dict;
+    next();
+  }
+  function assignEntries(usr, dict) {
+    Bid.find({ user: usr }).sort('-created').exec(function(err,bids) {
+      console.log(bids.length);
+      b+=1;
       if (err) {
         return next(err);
       } else if (!bids) {
 
-        req.usr.entries = 0;
+        dict[usr.valueOf()] = 0;
+        if (b === numUsers) {
+          finish(dict);
+        }
       } else {
-        req.usr.entries = bids.length;
+        dict[usr.valueOf()] = bids.length;
+        if (b === numUsers) {
+          finish(dict);
+        }
       }
-
-
+    });
   }
   for (var i = 0; i < numUsers; i++) {
     usr = req.model[i]._id;
-    Bid.find({ user: usr }).sort('-created').exec(assignEntries());
+    dict[usr.valueOf()] = 0;
+    assignEntries(usr, dict);
   }
-
-    next();
 };
