@@ -94,17 +94,30 @@ exports.userByID = function (req, res, next, id) {
 exports.listUsers = function (req, res, next) {
   User.find({}, '-salt -password').sort('-created').populate('user', 'displayName').exec(function (err, users) {
     if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
+      return next(err);
+    } else if (!users) {
+      return next(new Error('Failed to load users'));
     }
 
     req.model = users;
+    next();
   });
 };
 // Entries middleware
 
 exports.drawWinners = function (req,res,next) {
   // Each entry is assigned a number between one and the total entries, and a random number is generated to select a winning entry. This random number selection is repeated 3 times.
+  var numUsers = req.usr.length;
+  var Entries;
+  var winners = [];
+  for (var i = 0; i < numUsers; i++) {
+    for (var j = 0; j < req.usr[i].entries; j++) {
+      Entries.push(req.usr[i].valueOf());
+    }
+  }
+  for (var k = 0; k<3; k++) {
+    winners[k] = Math.floor(Math.random()*Entries.length());
+  }
+  res.json(winners);
 
 };

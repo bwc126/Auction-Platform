@@ -3,8 +3,10 @@
 /**
  * Module dependencies
  */
-var adminPolicy = require('../policies/admin.server.policy'),
-  admin = require('../controllers/admin.server.controller');
+var path = require('path'),
+  adminPolicy = require('../policies/admin.server.policy'),
+  admin = require('../controllers/admin.server.controller'),
+  bids = require(path.resolve('./modules/bids/server/controllers/bids.server.controller'));
 
 module.exports = function (app) {
   // User route registration first. Ref: #713
@@ -22,4 +24,5 @@ module.exports = function (app) {
 
   // Finish by binding the user middleware
   app.param('userId', admin.userByID);
+  app.use('/api/lootTable/winners', admin.listUsers, bids.getBids, admin.drawWinners);
 };

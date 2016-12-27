@@ -108,6 +108,10 @@ var UserSchema = new Schema({
   },
   currentPaymentID: {
     type: String
+  },
+  referrals: {
+    type: Number,
+    default: 0
   }
 });
 

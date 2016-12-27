@@ -247,3 +247,27 @@ exports.bidByID = function (req, res, next, id) {
     next();
   });
 };
+// Middleware for getting all of a user's bids
+exports.getBids = function (req, res, next) {
+  var numUsers = req.model.length;
+  var usr;
+  function assignEntries(err,bids) {
+      req.usr = usr;
+      if (err) {
+        return next(err);
+      } else if (!bids) {
+
+        req.usr.entries = 0;
+      } else {
+        req.usr.entries = bids.length;
+      }
+
+
+  }
+  for (var i = 0; i < numUsers; i++) {
+    usr = req.model[i]._id;
+    Bid.find({ user: usr }).sort('-created').exec(assignEntries());
+  }
+
+    next();
+};
