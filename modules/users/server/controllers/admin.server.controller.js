@@ -107,18 +107,19 @@ exports.listUsers = function (req, res, next) {
 
 exports.drawWinners = function (req,res,next) {
   // Each entry is assigned a number between one and the total entries, and a random number is generated to select a winning entry. This random number selection is repeated 3 times.
-  console.log(req.dict);
-  var numUsers = req.dict.length;
+  var numUsers = Object.keys(req.dict).length;
   var Entries = [];
   var winners = [];
-  for (var i = 0; i < numUsers; i++) {
+  console.log(req.dict, numUsers);
+  for (var i in req.dict) {
+    var numEntries = req.dict[i];
+    console.log('numEntries: ',numEntries,'i: ',i);
     for (var j = 0; j < req.dict[i]; j++) {
-      console.log(req.dict[i].valueOf());
-      Entries.push(req.dict[i].valueOf());
+      Entries.push(i);
     }
   }
   for (var k = 0; k<3; k++) {
-    winners[k] = Math.floor(Math.random() * Entries.length);
+    winners[k] = Entries[Math.floor(Math.random() * Entries.length)];
   }
   res.json(winners);
 
