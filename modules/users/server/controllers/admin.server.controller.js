@@ -110,6 +110,7 @@ exports.drawWinners = function (req,res,next) {
   var numUsers = Object.keys(req.dict).length;
   var Entries = [];
   var winners = [];
+  var numDraws = 100;
   console.log(req.dict, numUsers);
   for (var i in req.dict) {
     var numEntries = req.dict[i];
@@ -118,7 +119,7 @@ exports.drawWinners = function (req,res,next) {
       Entries.push(i);
     }
   }
-  for (var k = 0; k<3; k++) {
+  for (var k = 0; k < numDraws; k++) {
     winners[k] = Entries[Math.floor(Math.random() * Entries.length)];
   }
   res.json(winners);
