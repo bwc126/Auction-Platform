@@ -10,6 +10,7 @@ var path = require('path'),
   config = require(path.resolve('./config/config')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+
 /**
  * Create an auction
  */
@@ -140,7 +141,9 @@ exports.delete = function (req, res) {
  * List of Auctions
  */
 exports.list = function (req, res) {
-  Auction.find().sort('-created').populate('user', 'displayName').exec(function (err, auctions) {
+  var thisWeek = new Date(Date.now());
+  thisWeek = thisWeek.getWeekNumber();
+  Auction.find({ weekActive: thisWeek }).sort('-created').populate('user', 'displayName').exec(function (err, auctions) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

@@ -17,6 +17,10 @@
           <textarea name="content" data-ng-model="vm.auction.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
+          <label class="control-label" for="weekActive">Loot Table Week</label>
+          <textarea name="weekActive" data-ng-model="vm.auction.weekActive" id="weekActive" class="form-control" cols="30" rows="1" placeholder="Loot Table Week"></textarea>
+        </div>
+        <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.auction._id ? 'Update' : 'Create'}}</button>
         </div>
         <div ng-show="vm.error" class="text-danger">

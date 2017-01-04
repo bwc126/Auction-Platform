@@ -77,8 +77,8 @@
     // Get the current leading bid
     function getCurrent(auction) {
       $http.get('/api/bids/'+auction._id+'/leading').then(function(response) {
-        auction.amount = response.data.amount.toFixed(2);
-        auction.leader = response.data.user.displayName;
+        auction.amount = response.data ? response.data.amount.toFixed(2) : 1.00;
+        auction.leader = response.data ? response.data.user.displayName : '';
         auction.currentUser = $scope.userName;
       });
 

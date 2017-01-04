@@ -18,6 +18,13 @@
     vm.save = save;
     vm.placeBid = placeBid;
 
+    Date.prototype.getWeekNumber = function() {
+      var d = new Date(+this);
+      d.setHours(0,0,0,0);
+      d.setDate(d.getDate()+4-(d.getDay()||7));
+      return Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+    };
+
     // Remove existing Auction
     function remove() {
       if (confirm('Are you sure you want to delete?')) {
@@ -31,6 +38,11 @@
         $scope.$broadcast('show-errors-check-validity', 'vm.form.auctionForm');
         return false;
       }
+
+      var activeDate = new Date(vm.auction.weekActive);
+      console.log(activeDate);
+      // Convert the input date to the week number
+      vm.auction.weekActive = activeDate.getWeekNumber();
 
       // TODO: move create/update logic to service
       if (vm.auction._id) {
