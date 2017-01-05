@@ -207,9 +207,9 @@ exports.leadingBids = function (req, res, next) {
       if (err) {
         return next(err);
       } else if (!bid) {
-        return res.status(404).send({
-          message: 'No bid with that identifier has been found'
-        });
+        // return req.status(404).send({
+        //   message: 'No bid with that identifier has been found'
+        // });
       } else if (req.user._id.equals(bid.user._id)) {
         bids.push(bid);
         if (b === numAuctions) {

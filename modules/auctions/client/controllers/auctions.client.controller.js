@@ -18,6 +18,9 @@
     vm.save = save;
     vm.placeBid = placeBid;
 
+    console.log(angular.element, $);
+    $('.datepicker').datepicker();
+
     Date.prototype.getWeekNumber = function() {
       var d = new Date(+this);
       d.setHours(0,0,0,0);
@@ -39,7 +42,7 @@
         return false;
       }
 
-      var activeDate = new Date(vm.auction.weekActive);
+      var activeDate = $('.datepicker').datepicker('getDate');
       console.log(activeDate);
       // Convert the input date to the week number
       vm.auction.weekActive = activeDate.getWeekNumber();
