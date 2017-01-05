@@ -33,6 +33,9 @@
     function placeBid(auction) {
       console.log(user.bidTotal);
       console.log(auction.amount);
+      if (!user.address || !user.region) {
+        window.alert('You need to enter a Shipping Address!', '\n http://localhost:3000/profile/edit');
+      }
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
       // TODO: Updating user authorization total should eventually be moved to server-side as middleware. !!! IMPORTANT !!!
       if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {

@@ -112,6 +112,12 @@ var UserSchema = new Schema({
   referrals: {
     type: Number,
     default: 0
+  },
+  address: {
+    type: String
+  },
+  region: {
+    type: String
   }
 });
 

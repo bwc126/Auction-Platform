@@ -1,6 +1,7 @@
 <section ng-controller="ReferralsController">
   <div class="page-header">
     <h1>Referrals</h1>
+    <h2>Current Referral Multiplier: {{ 1+user.referrals }}</h2>
   </div>
   <div ng-repeat="referral in referrals">
     <a ng-href="{{ linkify(referral._id) }}">{{ linkify(referral._id) }}</a>

@@ -22,7 +22,8 @@ exports.renderIndex = function (req, res) {
       additionalProvidersData: req.user.additionalProvidersData,
       bidTotal: req.user.bidTotal,
       authorizedAmount: req.user.authorizedAmount,
-      currentPaymentID: req.user.currentPaymentID
+      currentPaymentID: req.user.currentPaymentID,
+      referrals: req.user.referrals
 
     };
   }

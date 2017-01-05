@@ -17,7 +17,10 @@ module.exports = function (app) {
   // Single referral routes
   app.route('/api/referrals/:referralId').all(referralsPolicy.isAllowed)
     .get(referrals.read)
-    .put(referrals.update)
+    .put(function(req,res) {
+      referrals.update(req,res);
+      users.updateMultiplier(req,res);
+    })
     .delete(referrals.delete);
 
   app.route('/api/user-referrals/:userId').all(referralsPolicy.isAllowed)

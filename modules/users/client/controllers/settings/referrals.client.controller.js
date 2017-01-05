@@ -5,11 +5,12 @@
     .module('users')
     .controller('ReferralsController', ReferralsController);
 
-  ReferralsController.$inject = ['$http', '$scope', 'ReferralsService'];
+  ReferralsController.$inject = ['$http', '$scope', 'Authentication', 'ReferralsService'];
 
-  function ReferralsController($http, $scope, ReferralsService) {
+  function ReferralsController($http, $scope, Authentication, ReferralsService) {
     var vm = this;
     $scope.referrals = [];
+    $scope.user = Authentication.user;
 
     // This needs to be changed depending on the hosting environment
     var domain = 'http://localhost:3000';

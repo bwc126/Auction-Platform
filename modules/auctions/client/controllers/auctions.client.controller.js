@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['$', '$scope', '$state', '$window', '$timeout', '$http', 'auctionResolve', 'Authentication'];
+  AuctionsController.$inject = ['$scope', '$state', '$window', '$timeout', '$http', 'auctionResolve', 'Authentication'];
 
-  function AuctionsController($, $scope, $state, $window, $timeout, $http, auction, Authentication) {
+  function AuctionsController($scope, $state, $window, $timeout, $http, auction, Authentication) {
     var vm = this;
 
     vm.auction = auction;
@@ -17,9 +17,9 @@
     vm.remove = remove;
     vm.save = save;
     vm.placeBid = placeBid;
-
+    /* jshint ignore:start */
     $('.datepicker').datepicker();
-
+    /* jshint ignore:end */
     Date.prototype.getWeekNumber = function() {
       var d = new Date(+this);
       d.setHours(0,0,0,0);
@@ -40,11 +40,12 @@
         $scope.$broadcast('show-errors-check-validity', 'vm.form.auctionForm');
         return false;
       }
-
+      /* jshint ignore:start */
       var activeDate = $('.datepicker').datepicker('getDate');
       console.log(activeDate);
       // Convert the input date to the week number
       vm.auction.weekActive = activeDate.getWeekNumber();
+      /* jshint ignore:end */
 
       // TODO: move create/update logic to service
       if (vm.auction._id) {

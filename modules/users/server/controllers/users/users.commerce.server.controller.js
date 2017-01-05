@@ -50,3 +50,34 @@ exports.updateUserTotal = function (req, res) {
 exports.authorizePayment = function (req, res) {
   console.log('authorizing payment with paypal . . . ' + req.body.amount);
 };
+
+/**
+ * Update the user's referral multiplier
+ */
+
+exports.updateMultiplier = function (req, res) {
+  // Update the user's multiplier and save it.
+  console.log("updateMultipler called");
+  var user1 = req.referral.user_1;
+  var referralee = req.referral.user_2;
+  if (user1 !== referralee) {
+    User.findById(user1).exec(function(err, user) {
+      user.referrals+=1;
+      user.save(function (saveError) {
+        if (saveError) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(saveError)
+          });
+        } else {
+          req.login(user, function (err) {
+            if (err) {
+              res.status = err;
+            } else {
+              res.user = user;
+            }
+          });
+        }
+      });
+    });
+  }
+};
