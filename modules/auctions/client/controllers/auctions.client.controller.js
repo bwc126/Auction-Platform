@@ -5,9 +5,9 @@
     .module('auctions')
     .controller('AuctionsController', AuctionsController);
 
-  AuctionsController.$inject = ['$scope', '$state', '$window', '$timeout', '$http', 'auctionResolve', 'Authentication'];
+  AuctionsController.$inject = ['$', '$scope', '$state', '$window', '$timeout', '$http', 'auctionResolve', 'Authentication'];
 
-  function AuctionsController($scope, $state, $window, $timeout, $http, auction, Authentication) {
+  function AuctionsController($, $scope, $state, $window, $timeout, $http, auction, Authentication) {
     var vm = this;
 
     vm.auction = auction;
@@ -18,7 +18,6 @@
     vm.save = save;
     vm.placeBid = placeBid;
 
-    console.log(angular.element, $);
     $('.datepicker').datepicker();
 
     Date.prototype.getWeekNumber = function() {
