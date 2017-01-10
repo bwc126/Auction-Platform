@@ -23,7 +23,9 @@ exports.renderIndex = function (req, res) {
       bidTotal: req.user.bidTotal,
       authorizedAmount: req.user.authorizedAmount,
       currentPaymentID: req.user.currentPaymentID,
-      referrals: req.user.referrals
+      referrals: req.user.referrals,
+      address: validator.escape(req.user.address),
+      region: validator.escape(req.user.region)
 
     };
   }
