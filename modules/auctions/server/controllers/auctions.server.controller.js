@@ -157,7 +157,9 @@ exports.list = function (req, res) {
  * Middleware function for listing auctions.
  */
 exports.allAuctions = function (req, res, next) {
-  Auction.find().sort('-created').exec(function (err, auctions) {
+  var thisWeek = new Date(Date.now());
+  thisWeek = thisWeek.getWeekNumber();
+  Auction.find({ weekActive: thisWeek }).sort('-created').exec(function (err, auctions) {
     if (err) {
       return next(err);
     } else if (!auctions) {

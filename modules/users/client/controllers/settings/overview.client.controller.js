@@ -14,10 +14,12 @@
     vm.total = 0;
     function getLeading(auctionID) {
       $http.get('api/bids/'+auctionID+'/leading').then(function(response) {
-        var leadingBid = response.data;
-        if (leadingBid.user._id === vm.user._id) {
-          vm.bids.push(leadingBid);
+        if (response.data) {
+          var leadingBid = response.data;
+          if (leadingBid.user._id === vm.user._id) {
+            vm.bids.push(leadingBid);
 
+          }
         }
       });
     }
