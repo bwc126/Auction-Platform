@@ -41,6 +41,15 @@ angular.module('users.admin.routes').config(['$stateProvider',
         data: {
           pageTitle: 'Edit User {{ userResolve.displayName }}'
         }
+      })
+      .state('admin.winners', {
+        url: '/users/winners',
+        templateUrl: 'modules/users/client/views/admin/winners.client.view.html',
+        controller: 'WinnersController',
+        controllerAs: 'vm',
+        data: {
+          pageTitle: 'Winners Lists'
+        }
       });
   }
 ]);
