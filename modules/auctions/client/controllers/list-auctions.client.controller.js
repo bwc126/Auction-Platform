@@ -59,15 +59,18 @@
           'intent': 'authorize',
           'payer': { 'payment_method' : 'paypal' },
           'redirect_urls': {
-            'return_url': 'http://www.google.com',
-            'cancel_url': 'http://www.hawaii.com'
+            'return_url': 'http://localhost:3000/settings/payments',
+            'cancel_url': 'http://localhost:3000/settings/payments'
           } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
         console.log(paymentAuth);
         paymentAuth.then(function(response) {
           console.log(response);
           // TODO: Save the user's new auth amount, and place the bid if we've authorized enough.
-          user.authorizedAmount = Number(response.data.transactions[0].amount.total);
+          var transactions = response.data.transactions[0];
+          user.authorizedAmount = Number(transactions.amount.total);
+          user.currentPaymentID = response.data.id;
           updateUserProfile(user);
+          placeBid(auction);
         });
       }
       else {
@@ -77,6 +80,8 @@
           url : 'api/auctions/' + auction._id + '/bids'
         }).then(function(response) {
           console.log(response);
+          user.bidTotal += response.data.amount;
+          updateUserProfile(user);
         });
       }
     }
