@@ -60,10 +60,12 @@
       });
     };
     // This is where we extract paypal's addendum to our URL containing the payerID
-    var payerQuery = $location.absUrl().split('&')[2];
-    var payerID = payerQuery.split('=')[1];
-    console.log(payerID);
-    function capturePayment(paymentID) {
+    if ($location.absUrl().split('&')[2]) {
+      var payerQuery = $location.absUrl().split('&')[2];
+      var payerID = payerQuery.split('=')[1];
+      console.log(payerID);
+    }
+    function capturePayment(paymentID, payerID) {
       console.log(paymentID);
       var reqURL = 'https://api.sandbox.paypal.com/v1/payments/payment/'+paymentID+'/execute';
       var capture = new PaymentCaptureService({
