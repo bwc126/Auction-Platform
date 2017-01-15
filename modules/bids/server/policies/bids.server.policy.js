@@ -62,6 +62,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/auctions/:auctionId/:bidId',
       permissions: ['get']
+    }, {
+      resources: '/api/bids/:auctionId/leading',
+      permissions: ['get']
     }]
   }]);
 };

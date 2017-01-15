@@ -20,13 +20,13 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/users/:userId',
       permissions: '*'
-    }]
-  }, {
-    roles: ['user'],
-    allows: [{
+    }, {
       resources: '/api/lootTable/winners',
       permissions: '*'
     }]
+  }, {
+    roles: ['user'],
+    allows: []
   }]);
 };
 
