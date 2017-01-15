@@ -119,9 +119,17 @@ exports.drawWinners = function (req,res,next) {
       Entries.push(i);
     }
   }
-  for (var k = 0; k < numDraws; k++) {
-    winners[k] = Entries[Math.floor(Math.random() * Entries.length)];
+  function addWinner(WinnerID, Iteration) {
+    User.findById(WinnerID, '-salt -password -updated -profileImageURL -created').exec(function(err, user) {
+      winners[Iteration] = user;
+      if (Iteration === (numDraws-1)) {
+        res.json(winners);
+      }
+    });
   }
-  res.json(winners);
+  for (var k = 0; k < numDraws; k++) {
+    var winnerID = Entries[Math.floor(Math.random() * Entries.length)];
+    addWinner(winnerID, k);
+  }
 
 };

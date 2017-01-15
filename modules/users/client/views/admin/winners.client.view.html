@@ -5,8 +5,12 @@
     </div>
   </div>
 
-  <div class="row">
-
+  <div class="list-group row">
+    <button ng-click="vm.getLTWinners()">Select LT Winners</button>
+    <div ng-repeat="winner in vm.LTWinners track by $index">
+      <span ng-bind="winner.username"></span>
+      <span ng-bind="winner.email"></span>
+    </div>
   </div>
 
 </section>
