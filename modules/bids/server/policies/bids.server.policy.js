@@ -32,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/bids/leading',
       permissions: ['get']
+    }, {
+      resources: '/api/bids/winners',
+      permissions: ['get']
     }]
   }, {
     roles: ['user'],

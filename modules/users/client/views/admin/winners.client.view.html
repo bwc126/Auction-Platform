@@ -4,13 +4,17 @@
     Admin Winners Interface
     </div>
   </div>
-
-  <div class="list-group row">
-    <button ng-click="vm.getLTWinners()">Select LT Winners</button>
-    <div ng-repeat="winner in vm.LTWinners track by $index">
-      <span ng-bind="winner.username"></span>
-      <span ng-bind="winner.email"></span>
+  <div class="col-xs-6">
+    <div class="list-group row">
+      <button ng-click="vm.getLTWinners()">Select LT Winners</button>
+      <div ng-repeat="winner in vm.LTWinners track by $index">
+        <span ng-bind="winner.username"></span>
+        <span ng-bind="winner.email"></span>
+      </div>
     </div>
+  </div>
+  <div class="col-xs-6">
+    <button ng-click="vm.getAuctionWinners()">Auction Winners Info</button>
   </div>
 
 </section>

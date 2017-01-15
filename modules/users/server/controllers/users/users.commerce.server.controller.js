@@ -57,7 +57,7 @@ exports.authorizePayment = function (req, res) {
 
 exports.updateMultiplier = function (req, res) {
   // Update the user's multiplier and save it.
-  console.log("updateMultipler called");
+  console.log('updateMultipler called');
   var user1 = req.referral.user_1;
   var referralee = req.referral.user_2;
   if (user1 !== referralee) {
