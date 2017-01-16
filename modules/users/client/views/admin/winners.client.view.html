@@ -15,6 +15,15 @@
   </div>
   <div class="col-xs-6">
     <button ng-click="vm.getAuctionWinners()">Auction Winners Info</button>
+    <div ng-repeat="pairing in vm.auctionWinners">
+      <span ng-bind="pairing.auction.title"></span>
+      <span ng-bind="pairing.auction.content"></span>
+      Won By
+      <span ng-bind="pairing.user.displayName"></span>
+      <span ng-bind="pairing.user.address"></span>
+      <span ng-bind="pairing.user.region"></span>
+      <span ng-bind="pairing.user.email"></span>
+    </div>
   </div>
 
 </section>

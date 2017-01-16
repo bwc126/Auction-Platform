@@ -10,6 +10,7 @@
   function WinnersController($http, $scope, $state, $window, Authentication) {
     var vm = this;
     vm.LTWinners = [];
+    vm.auctionWinners = [];
     // Use functions to get LT and auction winners
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
@@ -26,6 +27,21 @@
       // For each auction, get the winner's shipping and email info, and the item they won
       $http.get('/api/bids/winners').then(function(response) {
         console.log(response);
+        vm.auctionWinners = response.data;
+        // var auctions = response.data;
+        // var numAuctions = Object.keys(auctions).length;
+        // var pairing = {
+        //   'auction': {},
+        //   'user': {}
+        // };
+        // for (var i = 0; i < numAuctions; i++) {
+        //   pairing.auction.name = Object.keys(auctions)[i].title + ', ' + Object.keys(auctions)[i].content;
+        //   pairing.user.name = Object.values(auctions)[i].displayName;
+        //   pairing.user.address = Object.values(auctions)[i].address + ', '+ Object.values(auctions)[i].region;
+        //   pairing.user.email = Object.values(auctions)[i].email;
+        //   vm.auctionWinners.push(pairing);
+        // }
+        console.log(vm.auctionWinners);
       });
     };
   }

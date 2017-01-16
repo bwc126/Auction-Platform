@@ -194,7 +194,6 @@ exports.leading = function (req, res) {
 exports.leadingBids = function (req, res, next) {
   var numAuctions = req.auctions.length;
   var bids = [];
-  var done = false;
   var b = 0;
   function finish(bids) {
     console.log(bids);
@@ -216,6 +215,38 @@ exports.leadingBids = function (req, res, next) {
           console.log('CALLING FINISH');
           finish(bids);
         }
+      }
+    });
+  }
+  for (var i = 0; i < numAuctions; i++) {
+    getBid(req.auctions[i]);
+  }
+
+};
+
+/**
+ * winningBids is middleware for retrieving a user's leading bids.
+ */
+exports.winningBids = function (req, res, next) {
+  var numAuctions = req.auctions.length;
+  var bids = [];
+  var b = 0;
+  function finish(bids) {
+    console.log(bids);
+    req.bids = bids;
+    next();
+  }
+  function getBid(auction) {
+    Bid.findOne({ auction: auction._id }).sort({ 'created' : -1 }).populate('user', 'displayName address region email').exec(function (err, bid) {
+      b+=1;
+      if (err) {
+        return next(err);
+      }
+      bid.auction = auction;
+      bids.push(bid);
+      if (b === numAuctions) {
+        console.log('CALLING FINISH');
+        finish(bids);
       }
     });
   }

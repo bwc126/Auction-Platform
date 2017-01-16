@@ -135,10 +135,14 @@ exports.drawWinners = function (req,res,next) {
 };
 
 exports.auctionWinners = function(req, res) {
-  console.log(req.bid);
-  var numWinners = req.bid.length;
-  var winnerTable;
+  var numWinners = req.bids.length;
+  var winnerTable = {};
   for (var i = 0; i < numWinners; i++) {
-    winnerTable[req.bid[i].user] = req.bid[i].auction;
+    console.log(req.bids[i]);
+    winnerTable[i] = {
+      'auction' : req.bids[i].auction,
+      'user' : req.bids[i].user
+    };
   }
+  res.json(winnerTable);
 };

@@ -34,5 +34,5 @@ module.exports = function (app) {
   app.param('bidId', bids.bidByID);
   app.use('/api/bids/leading', auctions.allAuctions, bids.leadingBids, users.updateUserTotal);
   // We need to use a different 'leadingBids' function that isn't user-specific
-  app.use('/api/bids/winners', auctions.allAuctions, bids.leadingBids, admin.auctionWinners);
+  app.use('/api/bids/winners', auctions.allAuctions, bids.winningBids, admin.auctionWinners);
 };

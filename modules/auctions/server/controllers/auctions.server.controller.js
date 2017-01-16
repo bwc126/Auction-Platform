@@ -159,7 +159,7 @@ exports.list = function (req, res) {
 exports.allAuctions = function (req, res, next) {
   var thisWeek = new Date(Date.now());
   thisWeek = thisWeek.getWeekNumber();
-  Auction.find({ weekActive: thisWeek }).sort('-created').exec(function (err, auctions) {
+  Auction.find({ weekActive: thisWeek }).sort('-created').populate('auction', 'title content').exec(function (err, auctions) {
     if (err) {
       return next(err);
     } else if (!auctions) {
