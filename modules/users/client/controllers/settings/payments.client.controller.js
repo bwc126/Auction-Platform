@@ -18,6 +18,11 @@
         console.log(response);
         Authentication.paypal = response.data.token_type + ' ' + response.data.access_token;
       });
+      // console.log('generateToken');
+      // $http.post('/api/users/PaypalToken').then(function(response) {
+      //   console.log('Response: ', response);
+      // });
+      // console.log('finish generate');
     };
     $scope.authorizePayment = function() {
       var authAmt = (user.bidTotal + THRESHOLD).toFixed(2);
