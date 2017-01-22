@@ -34,9 +34,12 @@
         <div class="form-group" show-errors>
           <label for="address">Street Address</label>
           <input type="text" id="address" name="address" class="form-control" ng-model="user.address" placeholder="Address" required>
-          <input type="text" id="address" name="address" class="form-control" ng-model="user.region" placeholder="City, State, Zip Code" required>
           <div ng-messages="userForm.address.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Address is required.</p>
+          </div>
+          <input type="text" id="address" name="address" class="form-control" ng-model="user.region" placeholder="City, State, Zip Code" required>
+          <div ng-messages="userForm.region.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Region is required.</p>
           </div>
         </div>
         <div class="text-center form-group">
