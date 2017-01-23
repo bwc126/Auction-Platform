@@ -13,16 +13,18 @@
     $scope.user = Authentication.user;
     var user = Authentication.user;
     $scope.generateToken = function() {
-      var request = new PaypalTokenService();
-      request.then(function(response) {
-        console.log(response);
-        Authentication.paypal = response.data.token_type + ' ' + response.data.access_token;
-      });
-      // console.log('generateToken');
-      // $http.post('/api/users/PaypalToken').then(function(response) {
-      //   console.log('Response: ', response);
+      // var request = new PaypalTokenService();
+      // request.then(function(response) {
+      //   console.log(response);
+      //   Authentication.paypal = response.data.token_type + ' ' + response.data.access_token;
       // });
-      // console.log('finish generate');
+      console.log('generateToken');
+      $http.post('/api/users/PaypalToken').then(function(response) {
+        var data = JSON.parse(response.data);
+        Authentication.paypal = data.token_type + ' ' + data.access_token;
+        console.log('Response: ', JSON.parse(response.data));
+      });
+      console.log('finish generate');
     };
     $scope.authorizePayment = function() {
       var authAmt = (user.bidTotal + THRESHOLD).toFixed(2);

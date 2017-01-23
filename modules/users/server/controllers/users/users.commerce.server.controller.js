@@ -13,7 +13,7 @@ var _ = require('lodash'),
   User = mongoose.model('User'),
   auctions = require(path.resolve('./modules/auctions/server/controllers/auctions.server.controller')),
   bids = require(path.resolve('./modules/bids/server/controllers/bids.server.controller')),
-  fetchUrl = require('fetch').fetchUrl;
+  rp = require('request-promise');
 
 
 /**
@@ -91,25 +91,21 @@ exports.paypalTokenService = function(req,res) {
   var meta;
   var url = 'https://api.sandbox.paypal.com/v1/oauth2/token';
   var settings = {
-    'url': 'https://api.sandbox.paypal.com/v1/oauth2/token',
     'async': true,
     'crossDomain': true,
+    'url': 'https://api.sandbox.paypal.com/v1/oauth2/token',
     'method': 'POST',
     'headers': {
       'content-type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json, text/plain, */*',
-      'authorization': 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM=',
-      'cache-control': 'no-cache',
-      'postman-token': 'bf5aa707-66c2-92f0-3c0e-af24e992b841'
+      'authorization': 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM='
     },
-    'data': 'grant_type=client_credentials',
-    'ignoreAuthModule': 'true'
+    'body': 'grant_type=client_credentials'
   };
-  fetchUrl(url, settings, function(error, meta, body) {
-    // console.log(error);
-    console.log(meta);
-    meta = meta;
-    // console.log(body);
-  });
-  res.json(meta);
+  rp(settings)
+    .then(function(response) {
+      res.json(response);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
 };
