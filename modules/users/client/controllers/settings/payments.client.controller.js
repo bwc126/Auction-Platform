@@ -28,25 +28,29 @@
     };
     $scope.authorizePayment = function() {
       var authAmt = (user.bidTotal + THRESHOLD).toFixed(2);
-      var paymentAuth = new PaymentAuthService({ 'data' : { 'transactions': [
-        {
-          'amount' : {
-            'total' : authAmt,
-            'currency' : 'USD',
-            'details' : {
-              'subtotal' : authAmt
-            }
-          },
-          'description' : 'This is to authorize an amount of '+ authAmt,
-        }],
-        'intent': 'authorize',
-        'payer': { 'payment_method' : 'paypal' },
-        'redirect_urls': {
-          'return_url': 'http://localhost:3000/settings/payments',
-          'cancel_url': 'http://localhost:3000/settings/payments'
-        } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
-      console.log(paymentAuth);
-      paymentAuth.then(function(response) {
+      // var paymentAuth = new PaymentAuthService({ 'data' : { 'transactions': [
+      //   {
+      //     'amount' : {
+      //       'total' : authAmt,
+      //       'currency' : 'USD',
+      //       'details' : {
+      //         'subtotal' : authAmt
+      //       }
+      //     },
+      //     'description' : 'This is to authorize an amount of '+ authAmt,
+      //   }],
+      //   'intent': 'authorize',
+      //   'payer': { 'payment_method' : 'paypal' },
+      //   'redirect_urls': {
+      //     'return_url': 'http://localhost:3000/settings/payments',
+      //     'cancel_url': 'http://localhost:3000/settings/payments'
+      //   } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
+      // console.log(paymentAuth);
+      $http.post('/api/users/PaypalPaymentAuth', {
+        'body' : {
+
+        }
+      }).then(function(response) {
         console.log(response);
         $scope.created = response.data.create_time;
 

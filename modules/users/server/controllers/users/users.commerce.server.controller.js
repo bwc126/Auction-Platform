@@ -83,6 +83,7 @@ exports.updateMultiplier = function (req, res) {
     });
   }
 };
+// Use paypal to obtain a token for use with further requests.
 exports.paypalTokenService = function(req,res) {
   // settings.url = 'https://api.sandbox.paypal.com/v1/oauth2/token';
   // settings.headers.Authorization = 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM=';
@@ -108,4 +109,69 @@ exports.paypalTokenService = function(req,res) {
     .catch(function(err) {
       res.json(err);
     });
+};
+// Use paypal to authorize payments.
+exports.paypalPaymentAuth = function(req, res) {
+  var amount = req.body.amount;
+  var returnUrl = req.body.returnUrl;
+  var cancelUrl = req.body.cancelUrl;
+  var settings = {
+    'method': 'POST',
+    'body': {}
+  };
+  settings.body.intent = 'authorize';
+  settings.body.payer = {
+    'payment_method' : 'paypal'
+  };
+  settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
+  settings.body.transactions = [
+    {
+      'amount' : {
+        'total' : amount,
+        'currency' : 'USD',
+        'details' : {
+          'subtotal' : amount
+        }
+      },
+      'description' : 'This is to authorize an amount of '+amount,
+    }];
+  settings.body.redirect_urls = {
+    'return_url': returnUrl,
+    'cancel_url': cancelUrl
+  };
+  settings.ignoreAuthModule = true;
+  rp(settings)
+    .then(function(response) {
+      res.json(response);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+};
+// Use paypal to capture payments.
+exports.paypalPaymentCapture = function (req, res) {
+  var amount = req.body.amount;
+  var returnUrl = req.body.returnUrl;
+  var cancelUrl = req.body.cancelUrl;
+  var payerID = req.body.payerID;
+  var auth = req.body.auth;
+  var paymentID = req.body.paymentID;
+  var settings = {
+    'method': 'POST',
+    'url' : 'https://api.sandbox.paypal.com/v1/payments/payment/'+paymentID+'/execute',
+    'headers': {
+      'authorization': auth,
+      'Content-Type': 'application/json',
+    },
+    'body' : {
+      'transactions': [{
+        'amount': {
+          'currency': 'USD',
+          'total': user.bidTotal.toFixed(2)
+        }
+      }],
+      'payer_id': payerID,
+    }
+  };
+  settings.ignoreAuthModule = true;
 };

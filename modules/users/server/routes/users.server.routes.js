@@ -12,6 +12,8 @@ module.exports = function (app) {
   app.route('/api/users/picture').post(users.changeProfilePicture);
   app.route('/api/users/AuthorizePayment').post(users.authorizePayment);
   app.route('/api/users/PaypalToken').post(users.paypalTokenService);
+  app.route('/api/users/PaypalPaymentAuth').post(users.paypalPaymentAuth);
+  app.route('/api/users/PaypalPaymentCapture').post(users.paypalPaymentCapture);
   // Finish by binding the user middleware
   app.param('userId', users.userByID);
 };
