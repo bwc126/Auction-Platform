@@ -100,6 +100,7 @@ exports.paypalTokenService = function(req,res) {
       'content-type': 'application/x-www-form-urlencoded',
       'authorization': 'Basic QVoyR3FxcGNSZUFBSzZMUFY2TVpLN3lKYU9KQkRUeXotOWlnNnVmSU96dXBQQ3hsTmFzQWZHU19DSm8xZXBIM0gwdm9EX2hMVHBUekNWN2E6RU1JOFRtZ215WHpRb0dPWFpkVDJXUWltdnIyTkVjZUdCUnVsVldyTUEycVlFNFpYRm1xTllLN2hVckFxbndHODQ3UjBxYWhVdUY2Zmo0dDM='
     },
+    // For some reason, this property of the options object for the request-promise needs to be called 'body' and not 'data'
     'body': 'grant_type=client_credentials'
   };
   rp(settings)
@@ -112,34 +113,60 @@ exports.paypalTokenService = function(req,res) {
 };
 // Use paypal to authorize payments.
 exports.paypalPaymentAuth = function(req, res) {
+  // console.log(req.body);
   var amount = req.body.amount;
-  var returnUrl = req.body.returnUrl;
-  var cancelUrl = req.body.cancelUrl;
+  var returnUrl = req.body.return_url;
+  var cancelUrl = req.body.cancel_Url;
+  var token = req.body.token;
+  console.log('token: ', token);
   var settings = {
+    'headers': {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    },
     'method': 'POST',
-    'body': {}
+    'url': 'https://api.sandbox.paypal.com/v1/payments/payment',
+    'data': {
+      'intent': 'authorize',
+      'payer': {'payment_method': 'paypal'},
+      'transactions': [{
+        'amount' : {
+          'total' : amount,
+          'currency' : 'USD',
+          'details' : {
+            'subtotal' : amount
+          }
+        },
+        'description': 'This is to authorize an amount of '+amount
+      }],
+      'redirect_urls' : {
+        'return_url': returnUrl,
+        'cancel_url': cancelUrl
+      }
+    },
   };
-  settings.body.intent = 'authorize';
-  settings.body.payer = {
-    'payment_method' : 'paypal'
-  };
-  settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
-  settings.body.transactions = [
-    {
-      'amount' : {
-        'total' : amount,
-        'currency' : 'USD',
-        'details' : {
-          'subtotal' : amount
-        }
-      },
-      'description' : 'This is to authorize an amount of '+amount,
-    }];
-  settings.body.redirect_urls = {
-    'return_url': returnUrl,
-    'cancel_url': cancelUrl
-  };
+  // settings.body.intent = 'authorize';
+  // settings.body.payer = {
+  //   'payment_method' : 'paypal'
+  // };
+  // settings.url = 'https://api.sandbox.paypal.com/v1/payments/payment';
+  // settings.body.transactions = [
+  //   {
+  //     'amount' : {
+  //       'total' : amount,
+  //       'currency' : 'USD',
+  //       'details' : {
+  //         'subtotal' : amount
+  //       }
+  //     },
+  //     'description' : 'This is to authorize an amount of '+amount,
+  //   }];
+  // settings.body.redirect_urls = {
+  //   'return_url': returnUrl,
+  //   'cancel_url': cancelUrl
+  // };
   settings.ignoreAuthModule = true;
+  // console.log('settings: ', settings);
   rp(settings)
     .then(function(response) {
       res.json(response);
@@ -156,6 +183,7 @@ exports.paypalPaymentCapture = function (req, res) {
   var payerID = req.body.payerID;
   var auth = req.body.auth;
   var paymentID = req.body.paymentID;
+  var user = req.body.user;
   var settings = {
     'method': 'POST',
     'url' : 'https://api.sandbox.paypal.com/v1/payments/payment/'+paymentID+'/execute',
