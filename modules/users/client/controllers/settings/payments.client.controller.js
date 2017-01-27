@@ -42,8 +42,8 @@
         'intent': 'authorize',
         'payer': { 'payment_method' : 'paypal' },
         'redirect_urls': {
-      'return_url': 'http://localhost:3000/settings/payments',
-      'cancel_url': 'http://localhost:3000/settings/payments',
+          'return_url': 'http://localhost:3000/settings/payments',
+          'cancel_url': 'http://localhost:3000/settings/payments',
         } }, 'headers' : { 'Authorization': Authentication.paypal, 'Content-Type': 'application/json' } });
       // console.log(paymentAuth);
       // $http.post('/api/users/PaypalPaymentAuth', {

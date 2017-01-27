@@ -128,7 +128,7 @@ exports.paypalPaymentAuth = function(req, res) {
     'url': 'https://api.sandbox.paypal.com/v1/payments/payment',
     'data': {
       'intent': 'authorize',
-      'payer': {'payment_method': 'paypal'},
+      'payer': { 'payment_method': 'paypal' },
       'transactions': [{
         'amount' : {
           'total' : amount,
