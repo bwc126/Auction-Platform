@@ -5,7 +5,9 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
     var updatePeriod = 3000;
     var auctions;
     var tableTotal;
+    var auctionTotal;
     $scope.tableTotal = 0;
+    $scope.auctionTotal = 0;
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
@@ -32,6 +34,7 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
       // Get the total of the LT every few seconds
       var bidUpdate = window.setInterval(function() {
         tableTotal = 0;
+        auctionTotal = 0;
         auctions.forEach(function(auction) {
           getCurrent(auction);
         });
@@ -47,9 +50,35 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
         auction.currentUser = $scope.userName;
         tableTotal += Number(auction.amount);
         $scope.tableTotal = (tableTotal*0.8).toFixed(2);
+        auctionTotal = auction.leader === $scope.authentication.user.displayName ? auctionTotal += 1 : auctionTotal;
+        $scope.auctionTotal = auctionTotal;
       });
 
     }
+
+    // function getUserBids() {
+    //
+    //   function getLeading(auctionID) {
+    //     $http.get('api/bids/'+auctionID+'/leading').then(function(response) {
+    //       if (response.data) {
+    //         var leadingBid = response.data;
+    //         if (leadingBid.user._id === $scope.authentication.user._id) {
+    //           vm.bids.push(leadingBid);
+    //
+    //         }
+    //       }
+    //     });
+    //   }
+    //   function getLeadingOfAllAuctions() {
+    //     $http.get('api/auctions').then(function(response) {
+    //       var auctions = response.data;
+    //       var length = auctions.length;
+    //       for (var i = 0; i < length; i++) {
+    //         getLeading(auctions[i]._id);
+    //       }
+    //     });
+    //   }
+    // }
 
   }
 ]);
