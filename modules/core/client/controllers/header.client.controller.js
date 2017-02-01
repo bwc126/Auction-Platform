@@ -1,13 +1,21 @@
-'use strict';
+(function() {
+  'use strict';
+  angular
+    .module('core')
+    .controller('HeaderController', HeaderController);
 
-angular.module('core').controller('HeaderController', ['$http', '$scope', '$state', 'Authentication', 'Menus',
-  function ($http, $scope, $state, Authentication, Menus) {
+  HeaderController.$inject = ['$http', '$scope', '$state', 'Authentication', 'Menus'];
+
+
+  function HeaderController($http, $scope, $state, Authentication, Menus) {
     var updatePeriod = 3000;
     var auctions;
     var tableTotal;
     var auctionTotal;
+    var userAuctions;
     $scope.tableTotal = 0;
     $scope.auctionTotal = 0;
+    $scope.userAuctions = [];
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
@@ -35,6 +43,7 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
       var bidUpdate = window.setInterval(function() {
         tableTotal = 0;
         auctionTotal = 0;
+        userAuctions = [];
         auctions.forEach(function(auction) {
           getCurrent(auction);
         });
@@ -52,6 +61,10 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
         $scope.tableTotal = (tableTotal*0.8).toFixed(2);
         auctionTotal = auction.leader === $scope.authentication.user.displayName ? auctionTotal += 1 : auctionTotal;
         $scope.auctionTotal = auctionTotal;
+        if (auction.leader === $scope.authentication.user.displayName) {
+          userAuctions.push(auction);
+        }
+        $scope.userAuctions = userAuctions;
       });
 
     }
@@ -81,4 +94,5 @@ angular.module('core').controller('HeaderController', ['$http', '$scope', '$stat
     // }
 
   }
-]);
+
+})();
