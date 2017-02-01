@@ -10,8 +10,8 @@
   </div> -->
   <nav class="collapse navbar-collapse" uib-collapse="!isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
-      <li class="navbar-text dropdown" uib-dropdown>
-        <li class="navbar-text dropdown-toggle" ng-bind="auctionTotal" uib-dropdown-toggle role="button"></li>
+      <li class="dropdown" uib-dropdown>
+        <a class="dropdown-toggle" ng-bind="auctionTotal" uib-dropdown-toggle role="button"></a>
         <ul class="dropdown-menu" role="menu">
           <li ng-repeat="auction in userAuctions | orderBy: 'amount'">
             <a ng-bind="auction.title"></a>
