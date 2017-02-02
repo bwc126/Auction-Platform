@@ -19,6 +19,7 @@
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
+    $scope.user = Authentication.user;
 
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');

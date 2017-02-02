@@ -10,14 +10,19 @@
   </div> -->
   <nav class="collapse navbar-collapse" uib-collapse="!isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
-      <li class="dropdown" uib-dropdown>
-        <a class="dropdown-toggle" ng-bind="auctionTotal" uib-dropdown-toggle role="button"></a>
-        <ul class="dropdown-menu" role="menu">
+        <a class="navbar-text" ng-bind="auctionTotal" uib-popover-template="'auctions-popover.html'" popover-title="{{ user.displayName + 's Auctions' }}"></a>
+        <script type="text/ng-template" id="auctions-popover.html">
+        <div ng-repeat="auction in userAuctions | orderBy: 'amount'">
+          <a ng-bind="auction.title"></a>
+          <a ng-bind="auction.amount"></a>
+        </div>
+        </script>
+        <!-- <ul class="dropdown-menu" role="menu">
           <li ng-repeat="auction in userAuctions | orderBy: 'amount'">
             <a ng-bind="auction.title"></a>
             <a ng-bind="auction.amount"></a>
           </li>
-        </ul>
+        </ul> -->
       </li>
       <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" uib-dropdown="item.type === 'dropdown'">
         <a ng-switch-when="dropdown" class="dropdown-toggle" uib-dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
