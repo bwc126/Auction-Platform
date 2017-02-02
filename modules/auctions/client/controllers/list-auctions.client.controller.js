@@ -120,6 +120,5 @@
     $scope.$on('$destroy',function() {
       window.clearInterval(bidUpdate);
     });
-
   }
 })();

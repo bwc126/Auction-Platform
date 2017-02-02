@@ -11,7 +11,7 @@
           Posted on
           <span ng-bind="auction.created | date:'mediumDate'"></span>
           by
-          <span ng-if="auction.user" ng-bind="auction.user.displayName"></span>
+          <a ng-if="auction.user" ng-bind="auction.user.displayName" uib-popover="{{ auction.user }}" popover-title="{{ 'Connect with ' + auction.user.displayName }}"></a>
           <span ng-if="!auction.user">Deleted User</span>
         </small>
         <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
