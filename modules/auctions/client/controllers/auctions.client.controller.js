@@ -17,6 +17,8 @@
     vm.remove = remove;
     vm.save = save;
     vm.placeBid = placeBid;
+    vm.results = [];
+    vm.userQuery = '';
     /* jshint ignore:start */
     $('.datepicker').datepicker();
     /* jshint ignore:end */
@@ -82,13 +84,13 @@
         console.log(response.data);
         var users = response.data;
         var result = users.filter(function(users){
-          return (users.displayName === query || users.username === query)
+          return (users.displayName.includes(query) || users.username.includes(query));
         });
         console.log(result);
-        vm.userQuery = result;
-        vm.advertiser = vm.userQuery._id;
-      })
-    }
+        vm.results = result;
+        vm.advertiser = vm.userQuery ? vm.userQuery._id : '';
+      });
+    };
 
   }
 })();

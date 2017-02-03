@@ -14,7 +14,12 @@
         </div>
         <div class="form-group" show-errors>
           <label class="control-label" for="advertiser">Advertiser</label>
-          <input name="advertiser" type="text" ng-model="vm.userQuery" id="advertiser" class="form-control" placeholder="Advertiser" ng-keyup="vm.userSearch()" required>
+          <input name="advertiser" type="" list="advertisers" ng-model="vm.userQuery" id="advertiser" class="form-control" placeholder="Advertiser" ng-keyup="vm.userSearch()" required>
+          <datalist id="advertisers">
+            <option ng-repeat="user in vm.results" value="{{ user.displayName }}">
+          </datalist>
+          <!-- <div ng-cloak="!vm.results"> -->
+          <!-- </div> -->
           <div ng-messages="vm.form.auctionForm.advertiser.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Advertiser name is required.</p>
           </div>
