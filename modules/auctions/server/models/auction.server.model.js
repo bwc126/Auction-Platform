@@ -29,6 +29,10 @@ var AuctionSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
+  advertiser: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
   auctionImageURL: {
     type: String,
     default: 'modules/auctions/client/img/default.png'

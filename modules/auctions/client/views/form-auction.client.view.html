@@ -12,6 +12,13 @@
             <p class="help-block error-text" ng-message="required">Auction title is required.</p>
           </div>
         </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="advertiser">Advertiser</label>
+          <input name="advertiser" type="text" ng-model="vm.userQuery" id="advertiser" class="form-control" placeholder="Advertiser" ng-keyup="vm.userSearch()" required>
+          <div ng-messages="vm.form.auctionForm.advertiser.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Advertiser name is required.</p>
+          </div>
+        </div>
         <div class="form-group">
           <label class="control-label" for="content">Content</label>
           <textarea name="content" data-ng-model="vm.auction.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>

@@ -74,5 +74,21 @@
       });
 
     }
+
+    vm.userSearch = function() {
+      var query = vm.userQuery;
+      console.log(query);
+      $http.get('api/users').then(function(response) {
+        console.log(response.data);
+        var users = response.data;
+        var result = users.filter(function(users){
+          return (users.displayName === query || users.username === query)
+        });
+        console.log(result);
+        vm.userQuery = result;
+        vm.advertiser = vm.userQuery._id;
+      })
+    }
+
   }
 })();
