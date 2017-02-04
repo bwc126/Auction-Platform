@@ -84,7 +84,7 @@
       $http.get('api/users').then(function(response) {
         var users = response.data;
         var result = users.filter(function(users){
-          return (users.displayName.includes(query) || users.username.includes(query));
+          return users.displayName.includes(query);
         });
         console.log(result);
         vm.results = result;

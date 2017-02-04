@@ -6,9 +6,15 @@
 
 }
 
+.popover img {
+
+  height: 100%;
+
+}
+
 .list-group-item {
 
-  min-height: 300px;
+  height: 300px;
 
 }
 

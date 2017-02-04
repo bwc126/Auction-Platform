@@ -76,6 +76,26 @@ var UserSchema = new Schema({
   },
   providerData: {},
   additionalProvidersData: {},
+  socialLinks: {
+    facebook: {
+      type: String
+    },
+    github: {
+      type: String
+    },
+    google: {
+      type: String
+    },
+    linkedin: {
+      type: String
+    },
+    other: {
+      type: String
+    },
+    personal: {
+      type: String
+    }
+  },
   roles: {
     type: [{
       type: String,

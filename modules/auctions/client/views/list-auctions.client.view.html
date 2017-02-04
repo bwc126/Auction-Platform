@@ -14,7 +14,8 @@
           <a ng-if="auction.advertiser" ng-bind="auction.advertiser.displayName" uib-popover-template="'advertiser-popover.html'" popover-title="{{ 'Connect with ' + auction.advertiser.displayName }}"></a>
           <script type="text/ng-template" id="advertiser-popover.html">
             <img ng-src="{{auction.advertiser.profileImageURL}}" class="header-profile-image" />
-            <h3 ng-bind="auction.advertiser.displayName">
+            <h6 ng-bind="auction.advertiser.displayName">
+            <p ng-repeat="link in auction.advertiser.socialLinks" ng-href="link" ng-bind="link">
           </script>
           <span ng-if="!auction.user">Deleted User</span>
         </small>

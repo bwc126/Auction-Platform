@@ -42,6 +42,42 @@
             <p class="help-block error-text" ng-message="required">Region is required.</p>
           </div>
         </div>
+        <div class="form-group" show-errors>
+          <label for="facebook">Facebook</label>
+          <input type="text" id="facebook" name="facebook" class="form-control" ng-model="user.socialLinks.facebook" placeholder="Facebook Profile Link">
+          <div ng-messages="userForm.facebook.$error" role="alert">
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="github">Github</label>
+          <input type="text" id="github" name="github" class="form-control" ng-model="user.socialLinks.github" placeholder="Github Profile Link">
+          <div ng-messages="userForm.github.$error" role="alert">
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="google">Google</label>
+          <input type="text" id="google" name="google" class="form-control" ng-model="user.socialLinks.google" placeholder="Google Profile Link">
+          <div ng-messages="userForm.google.$error" role="alert">
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="linkedin">LinkedIn</label>
+          <input type="text" id="linkedin" name="linkedin" class="form-control" ng-model="user.socialLinks.linkedin" placeholder="LinkedIn Profile Link">
+          <div ng-messages="userForm.linkedin.$error" role="alert">
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="other">Other Social Link</label>
+          <input type="text" id="other" name="other" class="form-control" ng-model="user.socialLinks.other" placeholder="Other Social Link">
+          <div ng-messages="userForm.other.$error" role="alert">
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label for="personal">Personal Website</label>
+          <input type="text" id="personal" name="personal" class="form-control" ng-model="user.socialLinks.personal" placeholder="Personal Website Link">
+          <div ng-messages="userForm.personal.$error" role="alert">
+          </div>
+        </div>
         <div class="text-center form-group">
           <button type="submit" class="btn btn-primary">Save Profile</button>
         </div>

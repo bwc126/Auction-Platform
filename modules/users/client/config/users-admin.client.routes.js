@@ -43,7 +43,7 @@ angular.module('users.admin.routes').config(['$stateProvider',
         }
       })
       .state('admin.winners', {
-        url: '/users/winners',
+        url: '/winners',
         templateUrl: 'modules/users/client/views/admin/winners.client.view.html',
         controller: 'WinnersController',
         controllerAs: 'vm',
