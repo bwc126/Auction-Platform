@@ -51,6 +51,7 @@ exports.update = function (req, res) {
   auction.title = req.body.title;
   auction.content = req.body.content;
   auction.auctionImageURL = req.body.auctionImageURL;
+  auction.advertiser = req.body.advertiser;
 
 
 

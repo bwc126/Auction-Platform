@@ -38,6 +38,7 @@
 
     // Save Auction
     function save(isValid) {
+      console.log(vm.auction);
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.auctionForm');
         return false;
@@ -81,16 +82,14 @@
       var query = vm.userQuery;
       console.log(query);
       $http.get('api/users').then(function(response) {
-        console.log(response.data);
         var users = response.data;
         var result = users.filter(function(users){
           return (users.displayName.includes(query) || users.username.includes(query));
         });
         console.log(result);
         vm.results = result;
-        vm.advertiser = vm.userQuery ? vm.userQuery._id : '';
+        vm.auction.advertiser = vm.results.length === 1 ? vm.results[0]._id : '';
       });
     };
-
   }
 })();
