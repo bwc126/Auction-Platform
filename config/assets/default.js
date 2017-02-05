@@ -3,10 +3,7 @@
 module.exports = {
   client: {
     lib: {
-      css: [
-        'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-      ],
+      css: [],
       js: [
         'public/lib/jquery/dist/jquery.min.js',
         'public/lib/angular/angular.js',
@@ -25,7 +22,9 @@ module.exports = {
     },
     css: [
       'modules/*/client/css/*.css',
-      'public/custom_lib/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css'
+      'public/custom_lib/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.min.css',
+      'public/lib/bootstrap/dist/css/bootstrap.css',
+      'public/lib/bootstrap/dist/css/bootstrap-theme.css'
     ],
     less: [
       'modules/*/client/less/*.less'

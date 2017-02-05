@@ -1,3 +1,16 @@
+@font-face {
+
+  font-family: 'Aileron';
+  src: url('public/custom_lib/fonts/Aileron-Regular.otf') format('otf');
+
+}
+
+html body {
+
+  font-family: 'Aileron', sans-serif;
+
+}
+
 .content {
   margin-top: 50px;
 }
