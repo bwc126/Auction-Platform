@@ -144,7 +144,7 @@ exports.delete = function (req, res) {
 exports.list = function (req, res) {
   var thisWeek = new Date(Date.now());
   thisWeek = thisWeek.getWeekNumber();
-  Auction.find({ weekActive: thisWeek }).sort('-created').populate('advertiser', 'displayName profileImageURL').exec(function (err, auctions) {
+  Auction.find({ weekActive: thisWeek }).sort('-created').populate('advertiser', 'displayName profileImageURL socialLinks').exec(function (err, auctions) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
