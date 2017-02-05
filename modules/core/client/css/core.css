@@ -11,6 +11,18 @@ html body {
 
 }
 
+header {
+
+  background: white;
+
+}
+
+.navbar-brand img {
+
+  height: 120%;
+
+}
+
 .content {
   margin-top: 50px;
 }
