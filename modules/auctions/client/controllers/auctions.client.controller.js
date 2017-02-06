@@ -10,6 +10,7 @@
   function AuctionsController($scope, $state, $window, $timeout, $http, auction, Authentication) {
     var vm = this;
 
+    console.log(auction);
     vm.auction = auction;
     vm.authentication = Authentication;
     vm.error = null;
@@ -18,7 +19,7 @@
     vm.save = save;
     vm.placeBid = placeBid;
     vm.results = [];
-    vm.userQuery = '';
+    vm.userQuery = auction.advertiser ? auction.advertiser.displayName : '';
     /* jshint ignore:start */
     $('.datepicker').datepicker();
     /* jshint ignore:end */
@@ -88,7 +89,7 @@
         });
         console.log(result);
         vm.results = result;
-        vm.auction.advertiser = vm.results.length >= 1 ? vm.results[0]._id : '';
+        // vm.auction.advertiser = vm.results.length >= 1 ? vm.results[0]._id : '';
       });
     };
   }

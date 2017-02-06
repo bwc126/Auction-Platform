@@ -183,7 +183,7 @@ exports.auctionByID = function (req, res, next, id) {
     });
   }
 
-  Auction.findById(id).populate('user', 'displayName').exec(function (err, auction) {
+  Auction.findById(id).populate('user advertiser', 'displayName').exec(function (err, auction) {
     if (err) {
       return next(err);
     } else if (!auction) {
