@@ -60,3 +60,9 @@ a:hover .header-profile-image {
 .has-error .help-inline.error-text {
   display: inline;
 }
+
+.content {
+
+  padding: 0 0 9% 0;
+
+}

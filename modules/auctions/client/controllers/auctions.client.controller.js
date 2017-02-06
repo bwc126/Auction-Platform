@@ -88,7 +88,7 @@
         });
         console.log(result);
         vm.results = result;
-        vm.auction.advertiser = vm.results.length === 1 ? vm.results[0]._id : '';
+        vm.auction.advertiser = vm.results.length >= 1 ? vm.results[0]._id : '';
       });
     };
   }

@@ -16,7 +16,7 @@
           <label class="control-label" for="advertiser">Advertiser</label>
           <input name="advertiser" type="" list="advertisers" ng-model="vm.userQuery" id="advertiser" class="form-control" placeholder="{{ vm.auction.advertiser ? vm.auction.advertiser.displayName : 'Advertiser' }}" ng-keyup="vm.userSearch()" required>
           <datalist id="advertisers">
-            <option ng-repeat="user in vm.results" value="{{ user.displayName + ' ' + user._id }}">
+            <option ng-repeat="user in vm.results" value="{{ user.displayName + ' ' + user._id }}" ng-click="vm.auction.advertiser = user._id">
           </datalist>
           <!-- <div ng-cloak="!vm.results"> -->
           <!-- </div> -->

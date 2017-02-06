@@ -33,6 +33,12 @@
     function placeBid(auction) {
       console.log(user.bidTotal);
       console.log(auction.amount);
+      if (!user) {
+        if (window.confirm('You need to register to bid on Auctions! Click "OK" to create an account.')) {
+          window.location.href='http://localhost:3000/authentication/signup';
+        }
+        return;
+      }
       if (!user.address || !user.region) {
         if (window.confirm('You need to enter a Shipping Address! Click "OK" to enter a shipping address')) {
           window.location.href='http://localhost:3000/settings/profile';

@@ -25,7 +25,7 @@
     Menus.addSubMenuItem('topbar', 'auctions', {
       title: 'Create Auction',
       state: 'auctions.create',
-      roles: ['user']
+      roles: ['admin']
     });
   }
 })();
