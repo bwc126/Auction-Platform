@@ -19,7 +19,7 @@
       Posted on
       <span ng-bind="vm.auction.created | date:'mediumDate'"></span>
       by
-      <span ng-if="vm.auction.user" ng-bind="vm.auction.user.displayName"></span>
+      <span ng-if="vm.auction.advertiser" ng-bind="vm.auction.advertiser.displayName"></span>
       <span ng-if="!vm.auction.user">Deleted User</span>
     </em>
   </small>

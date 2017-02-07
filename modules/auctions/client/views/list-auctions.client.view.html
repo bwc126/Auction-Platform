@@ -4,7 +4,6 @@
   </div>
   <div class="list-group row">
     <div ng-repeat="auction in vm.auctions"  class="list-group-item col-xs-4 col-md-2">
-      <div>{{auction}}</div>
       <a ui-sref="auctions.view({ auctionId: auction._id })">
         <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
         <br>

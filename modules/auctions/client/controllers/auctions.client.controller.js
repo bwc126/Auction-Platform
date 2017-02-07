@@ -22,6 +22,10 @@
     vm.userQuery = auction.advertiser ? auction.advertiser.displayName : '';
     /* jshint ignore:start */
     $('.datepicker').datepicker();
+    if (vm.auction.weekActive) {
+      console.log(vm.auction.weekActive);
+      $('.datepicker').datepicker('update',vm.auction.weekActive);
+    }
     /* jshint ignore:end */
     Date.prototype.getWeekNumber = function() {
       var d = new Date(+this);
