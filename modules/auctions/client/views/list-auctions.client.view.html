@@ -26,7 +26,7 @@
         <span ng-bind="auction.amount"></span>
       </a>
       <br>
-      <button ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)" class='pull-right'>Bid Now</button>
+      <button class="btn btn-primary" ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)" class='pull-right'>Bid Now</button>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?
