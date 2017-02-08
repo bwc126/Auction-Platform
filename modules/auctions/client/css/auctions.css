@@ -14,7 +14,18 @@
 
 .list-group-item {
 
-  height: 300px;
+  padding: 3%;
+  height: 330px;
+
+}
+
+.bid-btn {
+
+  position: absolute;
+  display: block;
+  bottom: 3%;
+  left: 0;
+  width: 100%;
 
 }
 

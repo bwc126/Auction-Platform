@@ -3,14 +3,14 @@
     <h1>Auctions</h1>
   </div>
   <div class="list-group row">
-    <div ng-repeat="auction in vm.auctions"  class="list-group-item col-xs-4 col-md-2">
+    <div ng-repeat="auction in vm.auctions"  class="list-group-item col-xs-4 col-md-2 text-center">
       <a ui-sref="auctions.view({ auctionId: auction._id })">
-        <img ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
+        <img class="text-center" ng-src="{{auction.auctionImageURL}}" alt="{{auction.title}}"></img>
         <br>
         <small class="list-group-item-text">
-          Posted on
-          <span ng-bind="auction.created | date:'mediumDate'"></span>
-          by
+          <!-- Posted on -->
+          <!-- <span ng-bind="auction.created | date:'mediumDate'"></span> -->
+          <!-- by -->
           <a ng-if="auction.advertiser" ng-bind="auction.advertiser.displayName" uib-popover-template="'advertiser-popover.html'" popover-title="{{ 'Connect with ' + auction.advertiser.displayName }}"></a>
           <script type="text/ng-template" id="advertiser-popover.html">
             <img ng-src="{{auction.advertiser.profileImageURL}}" class="header-profile-image" />
@@ -23,10 +23,14 @@
         </small>
         <h4 class="list-group-item-heading" ng-bind="auction.title"></h4>
         <p class="list-group-item-text" ng-bind="auction.content"></p>
-        <span ng-bind="auction.amount"></span>
       </a>
       <br>
-      <button class="btn btn-primary" ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)" class='pull-right'>Bid Now</button>
+      <div class="bid-btn">
+        <div class="row text-center col-xs-12">
+          <span class="col-xs-6" ng-bind="'$' + auction.amount"></span>
+          <button class="btn btn-primary col-xs-6" ng-if="auction.leader!==auction.currentUser" ng-click="vm.placeBid(auction)" class='pull-right'>Bid</button>
+        </div>
+      </div>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.auctions.$resolved && !vm.auctions.length">
     No auctions yet, why don't you <a ui-sref="auctions.create">create one</a>?
