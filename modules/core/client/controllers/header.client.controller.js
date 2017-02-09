@@ -13,6 +13,7 @@
     var tableTotal;
     var auctionTotal;
     var userAuctions;
+    var numAuctions;
     $scope.tableTotal = 0;
     $scope.auctionTotal = 0;
     $scope.userAuctions = [];
@@ -45,27 +46,51 @@
         tableTotal = 0;
         auctionTotal = 0;
         userAuctions = [];
+        numAuctions = auctions.length;
+        // console.log('Should be total auctions: ',numAuctions);
         auctions.forEach(function(auction) {
           getCurrent(auction);
+
         });
 
       }, updatePeriod);
       // Update the displayed LT value
 
     });
+    function finish(numUserAuctions, userAuctionList, lootTableTotal) {
+      // console.log("in finish");
+      if ($scope.auctionTotal !== numUserAuctions) {
+        $scope.auctionTotal = numUserAuctions;
+      }
+      if ($scope.userAuctions !== userAuctionList) {
+        $scope.userAuctions = userAuctionList;
+      }
+      if ($scope.tableTotal !== lootTableTotal) {
+        $scope.tableTotal = lootTableTotal;
+        $scope.shownTotal = (lootTableTotal*0.8).toFixed(2);
+      }
+
+    }
     function getCurrent(auction) {
       $http.get('/api/bids/'+auction._id+'/leading').then(function(response) {
         auction.amount = response.data ? response.data.amount.toFixed(2) : 1.00;
         auction.leader = response.data ? response.data.user.displayName : '';
         auction.currentUser = $scope.userName;
         tableTotal += Number(auction.amount);
-        $scope.tableTotal = (tableTotal*0.8).toFixed(2);
+        // tableTotal = (tableTotal*0.8).toFixed(2);
+        // console.log(tableTotal);
         auctionTotal = auction.leader === $scope.authentication.user.displayName ? auctionTotal += 1 : auctionTotal;
-        $scope.auctionTotal = auctionTotal;
+
         if (auction.leader === $scope.authentication.user.displayName) {
           userAuctions.push(auction);
         }
-        $scope.userAuctions = userAuctions;
+        if (numAuctions === 1) {
+          finish(auctionTotal, userAuctions, tableTotal);
+          return;
+        }
+        // console.log('Should be remaining Auctions: ',numAuctions);
+        numAuctions -= 1;
+        // console.log('Should be one less: ',numAuctions);
       });
 
     }

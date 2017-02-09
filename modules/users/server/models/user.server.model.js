@@ -123,9 +123,9 @@ var UserSchema = new Schema({
     default: 0
   },
   paymentAuth: {
-    date: {type: Date},
-    amount: {type: Number, default: 0},
-    id: {type: String}
+    date: { type: Date },
+    amount: { type: Number, default: 0 },
+    id: { type: String }
   },
   authorizedAmount: {
     type: Number,
