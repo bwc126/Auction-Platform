@@ -47,7 +47,7 @@
       }
       // Before a bid is placed, we should compare the user's current total to the user's authorized amount. If it doesn't surpass the threshold, we should prompt the user to approve a new authorization.
       // TODO: Updating user authorization total should eventually be moved to server-side as middleware. !!! IMPORTANT !!!
-      if (user.authorizedAmount < (user.bidTotal + THRESHOLD)) {
+      if (user.paymentAuth.amount < (user.bidTotal + THRESHOLD)) {
         // Request new authorization amount.
         newAuthAmt = (user.authorizedAmount + (THRESHOLD)).toFixed(2);
         console.log(newAuthAmt);
@@ -73,8 +73,12 @@
           console.log(response);
           // TODO: Save the user's new auth amount, and place the bid if we've authorized enough.
           var transactions = response.data.transactions[0];
-          user.authorizedAmount = Number(transactions.amount.total);
-          user.currentPaymentID = response.data.id;
+          // user.authorizedAmount = Number(transactions.amount.total);
+          // user.currentPaymentID = response.data.id;
+          user.paymentAuth.date = Date(response.data.create_time);
+          user.paymentAuth.amount = transactions.amount.total;
+          user.paymentAuth.id = response.data.id;
+
           updateUserProfile(user);
           placeBid(auction);
         });

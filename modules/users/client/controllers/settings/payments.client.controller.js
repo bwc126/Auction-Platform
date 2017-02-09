@@ -12,6 +12,7 @@
     var vm = this;
     $scope.user = Authentication.user;
     var user = Authentication.user;
+
     $scope.generateToken = function() {
       // var request = new PaypalTokenService();
       // request.then(function(response) {
@@ -26,6 +27,16 @@
       });
       console.log('finish generate');
     };
+    var weekAgo = new Date(Date.now());
+    weekAgo.setDate(weekAgo.getDate()-7);
+    if (user.paymentAuth) {
+      if (user.paymentAuth.date < weekAgo) {
+        user.paymentAuth.amount = 0;
+
+      }
+
+    }
+
     $scope.authorizePayment = function() {
       var authAmt = (user.bidTotal + THRESHOLD).toFixed(2);
       var paymentAuth = new PaymentAuthService({ 'data' : { 'transactions': [
@@ -53,12 +64,13 @@
       //   'token': Authentication.paypal
       paymentAuth.then(function(response) {
         console.log(response);
-        $scope.created = response.data.create_time;
-
         var transactions = response.data.transactions[0];
+        $scope.created = response.data.create_time;
         $scope.amount = transactions.amount.total + ' ' + transactions.amount.currency;
-        $scope.user.currentPaymentID = response.data.id;
         $scope.authLink = response.data.links[1].href;
+        $scope.user.paymentAuth.date = Date(response.data.create_time);
+        $scope.user.paymentAuth.amount = transactions.amount.total;
+        $scope.user.paymentAuth.id = response.data.id;
 
         var user = new Users($scope.user);
         user.$update(function (response) {

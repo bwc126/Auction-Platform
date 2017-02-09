@@ -122,6 +122,11 @@ var UserSchema = new Schema({
     type: Number,
     default: 0
   },
+  paymentAuth: {
+    date: {type: Date},
+    amount: {type: Number, default: 0},
+    id: {type: String}
+  },
   authorizedAmount: {
     type: Number,
     default: 0
