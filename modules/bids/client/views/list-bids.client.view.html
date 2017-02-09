@@ -3,15 +3,16 @@
     <h1>Bids</h1>
   </div>
   <div class="list-group row">
-    <a ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="list-group-item col-md-3">
+    <li ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="col-xs-3">
       <small class="list-group-item-text">
-        Bid on
+        <p ng-bind="bid.auction.title"></p>
+        for
+        <p ng-bind="'$'+(bid.amount).toFixed(2)"></p>
         <span ng-bind="bid.created | date:'mediumDate'"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="bid.auction.title"></h4>
-    </a>
+    </li>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">
-    No bids yet, why don't you create one?
+    No Bids
   </div>
 </section>

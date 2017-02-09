@@ -127,7 +127,7 @@ exports.delete = function (req, res) {
  */
 exports.listByAuction = function (req, res) {
 
-  Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').exec(function (err, bids) {
+  Bid.find({ auction: req.auction._id }).sort('-created').populate('user', 'displayName').populate('auction', 'title').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -142,7 +142,7 @@ exports.listByAuction = function (req, res) {
  */
 exports.listByUser = function (req, res) {
 
-  Bid.find({ user: req.user._id }).sort('-created').exec(function (err, bids) {
+  Bid.find({ user: req.user._id }).sort('-created').populate('auction', 'title').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
