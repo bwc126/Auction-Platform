@@ -10,7 +10,7 @@
   </div> -->
   <nav class="collapse navbar-collapse" uib-collapse="!isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
-        <a class="navbar-text" ng-bind="auctionTotal" uib-popover-template="'auctions-popover.html'" popover-title="{{ user.displayName + 's Auctions' }}"></a>
+        <a class="navbar-text" ng-bind="auctionTotal" uib-popover-template="'auctions-popover.html'" popover-title="{{popoverTitle}}"></a>
         <script type="text/ng-template" id="auctions-popover.html">
         <div ng-repeat="auction in userAuctions | orderBy: 'amount'">
           <a ng-bind="auction.title"></a>

@@ -2,15 +2,17 @@
   <div class="page-header">
     <h1>Bids</h1>
   </div>
-  <div class="list-group row">
-    <li ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="col-xs-3">
-      <small class="list-group-item-text">
-        <p ng-bind="bid.auction.title"></p>
-        for
-        <p ng-bind="'$'+(bid.amount).toFixed(2)"></p>
-        <span ng-bind="bid.created | date:'mediumDate'"></span>
-      </small>
-    </li>
+  <div class="row">
+    <div ng-repeat="bid in vm.bids" ui-sref="bids.view({ bidId: bid._id })" class="col-xs-3 column-padding">
+      <div class="panel panel-default panel_bid-additions">
+        <small class="panel-body">
+          <p ng-bind="bid.auction.title"></p>
+          for
+          <p ng-bind="'$'+(bid.amount).toFixed(2)"></p>
+          <span ng-bind="bid.created | date:'mediumDate'"></span>
+        </small>
+      </div>
+    </div>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.bids.$resolved && !vm.bids.length">
     No Bids

@@ -25,7 +25,8 @@ exports.renderIndex = function (req, res) {
       currentPaymentID: req.user.currentPaymentID,
       referrals: req.user.referrals,
       address: validator.escape(req.user.address),
-      region: validator.escape(req.user.region)
+      region: validator.escape(req.user.region),
+      paymentAuth: req.user.paymentAuth
 
     };
   }

@@ -22,6 +22,7 @@
     $scope.authentication = Authentication;
     $scope.user = Authentication.user;
 
+    $scope.popoverTitle = $scope.user.displayName[0].toUpperCase() + $scope.user.displayName.substring(1) + String.fromCharCode(39) + 's Auctions';
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');
 

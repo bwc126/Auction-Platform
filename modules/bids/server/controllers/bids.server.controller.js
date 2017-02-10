@@ -141,8 +141,11 @@ exports.listByAuction = function (req, res) {
  * List of Bids by User
  */
 exports.listByUser = function (req, res) {
+  var lastWeek = new Date(Date.now());
+  lastWeek = lastWeek.setDate(lastWeek.getDate()-7);
+  console.log('!!!!!!!!!!!!! ', lastWeek, 'or', (new Date()).getTime());
 
-  Bid.find({ user: req.user._id }).sort('-created').populate('auction', 'title').exec(function (err, bids) {
+  Bid.find({ user: req.user._id }).where('this.created.getDate() > lastWeek.getDate()').sort('-created').populate('auction', 'title').exec(function (err, bids) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
