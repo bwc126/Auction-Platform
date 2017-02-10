@@ -287,13 +287,17 @@ exports.getBids = function (req, res, next) {
   var usr;
   var dict = {};
   var b = 0;
+  var start = (new Date(Date.now())).getWeekNumber() - 1;
+
+  console.log('start is ',start, ' and query is ',(new Date(start)));
   function finish(dict) {
     req.dict = dict;
     next();
   }
   function assignEntries(usr, dict) {
-    Bid.find({ user: usr }).sort('-created').exec(function(err,bids) {
-      console.log(bids.length);
+    Bid.find({ user: usr }).sort('-created').populate('auction','weekActive').where('this.auction.weekActive.getTime() > (new Date(start)).getTime()').exec(function(err,bids) {
+      console.log(bids.length, bids);
+
       b+=1;
       if (err) {
         return next(err);

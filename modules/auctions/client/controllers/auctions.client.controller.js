@@ -24,7 +24,14 @@
     $('.datepicker').datepicker();
     if (vm.auction.weekActive) {
       console.log(vm.auction.weekActive);
-      $('.datepicker').datepicker('update',vm.auction.weekActive);
+      var week = vm.auction.weekActive;
+      var day = week * 7;
+      var month = Math.floor(day/30);
+      var date = day-(month)*30;
+      var active = new Date();
+      active.setFullYear(2017,month,date);
+      console.log(week, active, month, date);
+      $('.datepicker').datepicker('update',active);
     }
     /* jshint ignore:end */
     Date.prototype.getWeekNumber = function() {

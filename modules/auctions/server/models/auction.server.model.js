@@ -42,7 +42,7 @@ var AuctionSchema = new Schema({
     default: 1.00
   },
   weekActive: {
-    type: Date
+    type: Number
   }
 });
 

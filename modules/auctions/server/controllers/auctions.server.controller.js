@@ -172,6 +172,20 @@ exports.allAuctions = function (req, res, next) {
     next();
   });
 };
+exports.allLastWeekAuctions = function (req, res, next) {
+  var lastWeek = (new Date(Date.now())).getWeekNumber() -1;
+  Auction.find({ weekActive: lastWeek }).sort('-created').populate('auction', 'title content').exec(function (err, auctions) {
+    if (err) {
+      return next(err);
+    } else if (!auctions) {
+      return res.status(404).send({
+        message: 'No auctions have been found'
+      });
+    }
+    req.auctions = auctions;
+    next();
+  });
+};
 /**
  * Auction middleware
  */
